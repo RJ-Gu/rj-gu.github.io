@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Welcome to RJ-Gu&#39;s Homepage!</title>
+    <url>/uncategorized/About-this-Homepage/</url>
+    <content><![CDATA[<p><strong>Welcome to RJ-Gu’s homepage!</strong> I’m Rongjian Gu, a college student in <a href="https://www.ustc.edu.cn/">USTC</a>. This is a simple blog of mine, where I record some ideas and experiences. </p>
+<p>On the left are shortcuts you may find helpful.</p>
+<ul>
+<li><strong>About</strong> is a short introduction of me, and CV will be accessible to be downloaded someday. </li>
+<li>You can find essays and articles within <strong>Archives</strong> and <strong>Categories</strong>. Articles are sorted in order of time in <strong>Archives</strong>, while in <strong>Categories</strong> they are categorized.</li>
+</ul>
+<p>This blog is constructed with <a href="https://hexo.io/">Hexo</a> and <a href="https://github.com/theme-next/hexo-theme-next">NexT</a>. </p>
+<p>Please have fun here!</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>建站注意事项</title>
+    <url>/Hexo/site-constuction-info/</url>
+    <content><![CDATA[<h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>建立这个网站的初衷是为了记录自己大学生活中的一些想法、踩过的一些坑，并可以做一个树洞抒发一下情感。在这里记录一下建立这个网站的注意事项与一些资源路径。</p>
+<p>该文章整体框架基于以下博客：</p>
+<ul>
+<li>15wylu <a href="https://blog.csdn.net/qq_32767041/category_8927471.html">Hexo NexT</a></li>
+</ul>
+<p>主要步骤均在上述博客中，以下只记录一些注意事项与想法。</p>
+<span id="more"></span>
+<h2 id="1-安装node-js-Hexo-NexT"><a href="#1-安装node-js-Hexo-NexT" class="headerlink" title="1. 安装node.js Hexo NexT"></a>1. 安装node.js Hexo NexT</h2><ul>
+<li>windows下直接到官网下载<a href="https://nodejs.org/zh-cn/">node.js</a>与<a href="https://git-scm.com/">git</a>即可。</li>
+<li>npm一定要改源(taobao)。</li>
+<li><code>git clone</code>时不时抽风，clone不下来。不妨试试ladder。但ladder有时候也不好使。这时候就需要给电脑烧三根香，碰碰运气。运气好了就能clone也能push；运气不好clone一个小时也不行，push一晚也push不上去。</li>
+</ul>
+<h2 id="2-Hexo"><a href="#2-Hexo" class="headerlink" title="2. Hexo"></a>2. Hexo</h2><ul>
+<li><p><code>hexo init</code>操作必须在空文件夹中进行。里面有无关文件也不行。</p>
+</li>
+<li><p>node_modules是真的nt。搞一个小网站需要这么多插件吗？</p>
+</li>
+<li><p>可以修改scaffolds文件夹中的模板。</p>
+<p>例如建站中不想要tags但是想要categories，那模板中就可以增加categories，删去tags。</p>
+</li>
+<li><p>source文件夹中只有<strong>_post</strong>是文章文件夹。所有在首页出现的博客文章均位于_post中。不在_post中的文件夹以及其中的文件将不会在主页中显示，只能通过特定链接访问，因此可以放一些隐藏文件。此外about、categories、tags等捷径也在单独的文件夹中。</p>
+</li>
+<li><p><code>hexo new [] &quot;&quot;</code>有点烦人。想要新建文章，直接在文件夹里面新建还不行，需要单独开命令行，建完了再开typora。不知道有没有解决办法。</p>
+</li>
+<li><p>categories的标签方法为yaml语法。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> [<span class="string">Study</span>, <span class="string">math</span>]</span><br><span class="line"><span class="comment"># - [new category]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>hexo deploy --debug</code>中注意debug前面是两个横线。</p>
+</li>
+<li><p>插入图片：使用hexo-asset-image插件。可参考<a href="https://blog.csdn.net/m0_43401436/article/details/107191688">hexo博客中插入图片失败——解决思路及个人最终解决办法</a></p>
+</li>
+<li><p>部署至Github、源代码上传至Github是两个事。部署是把自己生成的静态文件（如index.html、css配置文件、js脚本）上传到Github上；源代码上传就是源代码（source文件夹以及md文件、themes文件夹、config.yml等）上传。</p>
+</li>
+<li><p>数学公式：使用mathjax配置。参考：<a href="https://blog.csdn.net/u014630987/article/details/78670258">如何在 hexo 中支持 Mathjax？</a></p>
+<p>基本步骤：</p>
+<ol>
+<li>修改渲染引擎至kramed（kram &lt;- mark倒序）</li>
+<li>mathjax cdn刷新</li>
+<li>更改转义规则</li>
+<li>config.yaml开启mathjax</li>
+</ol>
+</li>
+<li><p>ftpsync至home.ustc.edu.cn失败，卡在commiting处mkdirs后。解决办法：<a href="https://es2q.com/blog/2019/05/12/Hexo-ftpsync-bug/">Hexo ftpsync错误分析</a></p>
+</li>
+</ul>
+<h2 id="3-NexT"><a href="#3-NexT" class="headerlink" title="3. NexT"></a>3. NexT</h2><ul>
+<li>鼠标点击特效：参考<a href="https://jrbcode.gitee.io/posts/80095cae.html">在Hexo+NexT博客中设置鼠标点击特效</a></li>
+<li>文章折叠：使用了<code>&lt;!-- more --&gt;</code>标志。有插件可以完成此工作，但是我并未使用。</li>
+</ul>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>以上基本是重点注意事项了。建这个站，还是希望自己能多写写东西，多多记录一下生活。愿我能达到吧。</p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+  </entry>
+</search>
