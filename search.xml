@@ -14,6 +14,135 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Ubuntu虚拟机搭建</title>
+    <url>/Linux/Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>最近vmware workstation出17版本了，加上之前Ubuntu磁盘管理出了一些问题，识别不到虚拟机新分配的硬盘空间，于是打算重装一下Ubuntu，记录一下过程。</p>
+<span id="more"></span>
+<h2 id="安装VMware-Workstation-17"><a href="#安装VMware-Workstation-17" class="headerlink" title="安装VMware Workstation 17"></a>安装VMware Workstation 17</h2><p>安装包地址：<a href="https://www.vmware.com/go/getworkstation-win">VMware Workstation 17</a></p>
+<p>许可证：MC60H-DWHD5-H80U9-6V85M-8280D</p>
+<h2 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h2><p>此处使用了Ubuntu的22.04.1版本。镜像位于<a href="https://mirrors.ustc.edu.cn/ubuntu-releases/22.04.1/ubuntu-22.04.1-desktop-amd64.iso">USTC ubuntu镜像</a>。</p>
+<p>推荐使用“典型”安装方式。按照个人电脑的配置进行CPU、内存和硬盘的分配；此处我分配了256GB的硬盘和8GB的内存，CPU个数为1，CPU内核个数为16。其余选项默认。此处分配了较大的空间，主要目的是防止以后有磁盘空间不够的情况出现。</p>
+<p>Ubuntu出现安装界面时，选择“minimum installation”，避免安装大量的无用软件；取消勾选“download updates”，待安装完成后在进行update。</p>
+<blockquote>
+<p>不勾选自动更新是因为此时未换源，更新速度很可能极慢。</p>
+</blockquote>
+<p>安装完成后Ubuntu就可以使用了，但是为了更好地使用，还需要进行一定的配置。</p>
+<h2 id="配置Ubuntu"><a href="#配置Ubuntu" class="headerlink" title="配置Ubuntu"></a>配置Ubuntu</h2><h3 id="换软件源-USTC源"><a href="#换软件源-USTC源" class="headerlink" title="换软件源(USTC源)"></a>换软件源(USTC源)</h3><p>打开终端，输入以下命令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo sed -i <span class="string">&#x27;s/cn.archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span><br><span class="line">sudo sed -i <span class="string">&#x27;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span><br><span class="line">sudo sed -i <span class="string">&#x27;s/security.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<p>可将软件源更换为ustc源。再打开sources.list，可见所有的archive.ubuntu.com均换成了mirrors.ustc.edu.cn。</p>
+<blockquote>
+<p>sudo为使用管理员权限执行命令；sed为linux中的一个文本脚本编辑器；后续参数<code>s/a/b/g</code>将所有的a替换为b。</p>
+<p>sources.list的位置即为最后的参数<code>etc/apt/sources.list</code>。</p>
+</blockquote>
+<p>换源之后，apt下载软件包速度会变快，并能防止连接不上服务器的情况发生。</p>
+<p>再进行软件源的更新与软件的更新</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade -y</span><br></pre></td></tr></table></figure>
+<p>即可自动将软件包更新到最新的版本。</p>
+<blockquote>
+<p>apt为Ubuntu中的软件包管理器，可从上述修改的软件源中获取软件包，并自动安装。与之对应的，由已经在本地的<code>dpkg</code>文件直接安装的包管理器为dpkg。</p>
+<p><code>apt update</code>指更新软件源列表，可以检查本地的软件是否有更新；<code>apt upgrade</code>指更新软件，将<code>apt update</code>获取的可更新列表付诸实践，进行软件的更新。</p>
+<p>推荐先进行<code>apt update</code>，再进行<code>apt upgrade</code>。</p>
+<p>在<code>apt update</code>的终端输出中，观察到所有的下载地址均为“/mirrors.ustc.edu.cn/”，也可以证明上述修改软件源的操作是正确的。</p>
+</blockquote>
+<h3 id="修改语言"><a href="#修改语言" class="headerlink" title="修改语言"></a>修改语言</h3><p>settings &gt;&gt; region &amp; language &gt;&gt; manange installed language &gt;&gt; install/remove languages即可。</p>
+<p>也可通过终端更改，见<a href="https://blog.csdn.net/BobYuan888/article/details/88662779">Ubuntu修改终端下的语言（中文或英文）</a></p>
+<blockquote>
+<p>除了更改语言与使用浏览器等需要桌面GUI的操作，其他情况下均推荐使用终端控制。</p>
+</blockquote>
+<p>现在Ubuntu语言就已经更换为中文了。</p>
+<h3 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h3><p>终端运行如下命令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install vim build-essential python3-pip git xxd wget curl net-tools</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>apt install</code>后跟多个参数可以同时安装多个软件包。</p>
+<p>以下依次概括常用软件的用途：</p>
+<p><code>vim</code>：终端文本编辑器。linux上编辑文件最常用的文本编辑器，所有终端编辑文件的操作基本均需使用。vim的使用方法此处不展开，可自行查询。</p>
+<p><code>build-essential</code>：c/c++编译器。包括gcc、g++、make等。</p>
+<p><code>python3-pip</code>：python的包管理器。安装python库大都需要该程序。（因为有<code>conda</code>）</p>
+<p><code>git</code>：版本控制系统。可以进行文本文件的版本控制。git的使用方法此处不展开，可自行查询。</p>
+<p><code>xxd</code>：16进制转换器。可将文件以16进制形式存储。</p>
+<p><code>wget</code>/<code>curl</code>：网络下载器。可从指定的链接下载网络上的文件。同时二者还有测试网络连接等等功能。</p>
+<p><code>net-tools</code>：网络工具箱。包括了<code>ifconfig</code>等命令，可用于检测网络状况。</p>
+</blockquote>
+<h3 id="ssh与远程"><a href="#ssh与远程" class="headerlink" title="ssh与远程"></a>ssh与远程</h3><p>ssh是Secure SHell的缩写。通过ssh可以实现远程访问终端，则以后需要打开终端时就不需要在虚拟机上打开了。如果不需要Ubuntu的桌面，则完全可以只使用ssh控制，将虚拟机放在后台。</p>
+<p>打开终端，输入以下命令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install openssh-server openssh-client</span><br></pre></td></tr></table></figure>
+<p>此时虚拟机上就已经有ssh软件包了。</p>
+<blockquote>
+<p>openssh-server允许本机作为宿主机，其他机器连接到本机上；</p>
+<p>openssh-client允许本机连接其他机器。</p>
+</blockquote>
+<h4 id="账号密码连接"><a href="#账号密码连接" class="headerlink" title="账号密码连接"></a>账号密码连接</h4><p>在虚拟机的终端输入<code>ifconfig</code>命令，找到<strong>ens33</strong>内<strong>inet</strong>后的ipv4地址，即为主机连接虚拟机的地址。</p>
+<p>在主机远程软件（例如xshell、terminus等）上输入该地址，并输入账号密码，即可远程登录该主机。</p>
+<p>从此以后，涉及到的所有终端操作均可通过远程连接。</p>
+<h4 id="密钥连接"><a href="#密钥连接" class="headerlink" title="密钥连接"></a>密钥连接</h4><p>远程密钥连接需要在本地生成私钥与公钥，将公钥发给外部机器，外部机器即可访问本机。</p>
+<p>终端输入以下命令，并连打三次回车以生成密钥：（引号内为邮箱地址）</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxx@yyy.com&quot;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>连打三次回车的目的：</p>
+<ul>
+<li>第一次为输入密钥存放的地址，此处直接选择默认地址即可；</li>
+<li>第二次与第三次为输入与验证passphrase，无需要则可以直接回车略过。</li>
+</ul>
+</blockquote>
+<p>此时密钥已经生成在<strong>/home/usrname/.ssh</strong>文件夹内了。</p>
+<p>通过sftp连接主机（可使用账号密码连接），将<strong>/home/usrname/.ssh/id_rsa</strong>文件复制到宿主机上，并通过该私钥连接虚拟机即可。</p>
+<h4 id="git-ssh配置"><a href="#git-ssh配置" class="headerlink" title="git ssh配置"></a>git ssh配置</h4><p>git可以通过上述生成的密钥进行ssh连接，保护了pull、clone、push等操作的安全性。此处不做详解，可在网络上找到教程。</p>
+<h3 id="桌面环境配置"><a href="#桌面环境配置" class="headerlink" title="桌面环境配置"></a>桌面环境配置</h3><p>Ubuntu默认的桌面为gnome桌面，修改桌面的外观需要与gnome有关的插件。</p>
+<p>终端运行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install gnome-tweak chrome-gnome-shell gnome-shell-extensions gnome-extensions-app</span><br></pre></td></tr></table></figure>
+<p>即可获取与修改gnome桌面有关的依赖软件。</p>
+<p>重启机器，使更改生效；在应用程序列表中将找到tweak（优化）与extensions（扩展）。</p>
+<p>在优化中：</p>
+<ul>
+<li>“字体”下的“缩放比例”可以更改桌面的缩放大小；</li>
+<li>“键盘与鼠标”下的“其他布局选项”可以修改键盘映射；个人常将<kbd>Esc</kbd>与<kbd>Caps Lock</kbd>互换以便于vim的编辑，则在“Caps Lock 行为”中找到“Swap Esc and Caps Lock”并选中即可。</li>
+</ul>
+<h3 id="（可选）zsh、oh-my-zsh、p10k及相关插件的安装"><a href="#（可选）zsh、oh-my-zsh、p10k及相关插件的安装" class="headerlink" title="（可选）zsh、oh-my-zsh、p10k及相关插件的安装"></a>（可选）zsh、oh-my-zsh、p10k及相关插件的安装</h3><p>zsh是linux系统中除bash外的另一种shell，功能比bash强大，可添加插件等，对于终端的操作有很大帮助。</p>
+<p>oh-my-zsh和powerlevel10k均为zsh的插件，可以美化zsh。</p>
+<p><strong>以下软件的安装均为可选项，主要目的在于美化与增强终端功能，使用bash也不会造成过大的影响。</strong></p>
+<h4 id="相关字体的安装"><a href="#相关字体的安装" class="headerlink" title="相关字体的安装"></a>相关字体的安装</h4><p>为了正常显示p10k中的字体，首先进行相关字体的安装。</p>
+<p>前往<a href="https://github.com/romkatv/powerlevel10k#fonts">Fonts</a>页面，下载其中的<strong>MesloLGS NF *</strong>字体，并安装。此处在桌面操作较方便。</p>
+<p>终端输入以下命令，以检验安装是否成功。</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fc-list | grep MesloLGS</span><br></pre></td></tr></table></figure>
+<p>如果在列表中能看到各MesloLGS NF字体，则安装成功。</p>
+<blockquote>
+<p><code>fc-list</code>用于显示所有安装的字体。</p>
+<p>由于字体过多，列表将会很长，不利于查找是否有所需的字体。于是使用<code>grep</code>命令，在给定的文本中寻找MesloLGS字体。</p>
+<p><code>|</code>是管道 (pipe)，用于将前一指令的输出重定向为后一指令的输入。</p>
+</blockquote>
+<p>注意应在终端（远程、本地）的配置中修改显示字体为MesloLGS。</p>
+<h4 id="zsh安装"><a href="#zsh安装" class="headerlink" title="zsh安装"></a>zsh安装</h4><p>终端输入<code>sudo apt install zsh</code>即可。</p>
+<p>zsh的配置文件在<code>~/.zshrc</code>中，可以进行主题更换、插件安装等操作。具体在以下步骤中说明。</p>
+<h4 id="oh-my-zsh安装"><a href="#oh-my-zsh安装" class="headerlink" title="oh-my-zsh安装"></a>oh-my-zsh安装</h4><p>终端输入以下指令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>或者使用<code>wget</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>即可安装oh-my-zsh。过程中会询问是否将默认终端转换为zsh，此处输入y选择是。</p>
+<blockquote>
+<p>此处可以看出<code>wget</code>与<code>curl</code>有相似之处。</p>
+</blockquote>
+<p>安装完成后发现shell的提示符变为箭头→，说明默认终端已经更改为了zsh。</p>
+<h4 id="oh-my-zsh主题更换"><a href="#oh-my-zsh主题更换" class="headerlink" title="oh-my-zsh主题更换"></a>oh-my-zsh主题更换</h4><p>oh-my-zsh已经有很多的主题，在<code>.zshrc</code>中选用合适的主题即可。</p>
+<p>例如想要更换为agnoster主题，则只需在<code>.zshrc</code>中修改<code>ZSH_THEME=&quot;agnoster&quot;</code>，再执行<code>source ~/.zshrc</code>重新加载<code>.zshrc</code>即可看到更改后的主题。</p>
+<h4 id="powerlevel10k安装"><a href="#powerlevel10k安装" class="headerlink" title="powerlevel10k安装"></a>powerlevel10k安装</h4><p>终端输入以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git <span class="variable">$&#123;ZSH_CUSTOM:-<span class="variable">$HOME</span>/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+<p>即可安装powerlevel10k。</p>
+<p>在<code>.zshrc</code>中修改<code>ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</code>，再执行<code>source ~/.zshrc</code>重新加载<code>.zshrc</code>即可进入powerlevel10k的配置界面。按照提示操作即可配置p10k的界面设置。</p>
+<p>若要重新配置p10k，则在终端输入<code>p10k configure</code>即可重新回到配置界面。</p>
+<h4 id="zsh插件安装"><a href="#zsh插件安装" class="headerlink" title="zsh插件安装"></a>zsh插件安装</h4><h5 id="zsh-syntax-highlighting"><a href="#zsh-syntax-highlighting" class="headerlink" title="zsh-syntax-highlighting"></a>zsh-syntax-highlighting</h5><p>这个插件可以帮助检查语法。输入正确的语法会显示绿色，错误的会显示红色。</p>
+<p>终端输入以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+<p>修改<code>.zshrc</code>中<code>plugins=(git zsh-syntax-highlighting)</code>，再执行<code>source ~/.zshrc</code>重新加载<code>.zshrc</code>即可。</p>
+<h5 id="其他插件"><a href="#其他插件" class="headerlink" title="其他插件"></a>其他插件</h5><p>另有zsh-autosuggestions插件，可用于自动补全之前输入过的命令。安装方法与上述插件类似。地址如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>Ubuntu的配置基本到此就结束了。目前已经可以使用Ubuntu进行基本的开发工作了。</p>
+<p>Linux内容博大精深，上述安装只是一个了解Linux的入口。深入了解Linux需要大量的实践与试错。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
     <title>建站注意事项</title>
     <url>/Hexo/site-constuction-info/</url>
     <content><![CDATA[<h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>建立这个网站的初衷是为了记录自己大学生活中的一些想法、踩过的一些坑，并可以做一个树洞抒发一下情感。在这里记录一下建立这个网站的注意事项与一些资源路径。</p>
