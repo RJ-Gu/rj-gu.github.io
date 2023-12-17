@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Welcome to RJ-Gu&#39;s Homepage!</title>
+    <url>/uncategorized/About-this-Homepage/</url>
+    <content><![CDATA[<p><strong>Welcome to RJ-Gu’s homepage!</strong> I’m Rongjian Gu, a college student in <a href="https://www.ustc.edu.cn/">USTC</a>. This is a simple blog of mine, where I record some ideas and experiences. </p>
+<p>On the left are shortcuts you may find helpful.</p>
+<ul>
+<li><strong>About</strong> is a short introduction of me, <del>and CV will be accessible to be downloaded someday.</del> Now CV can be downloaded!</li>
+<li>You can find essays and articles within <strong>Archives</strong> and <strong>Categories</strong>. Articles are sorted in order of time in <strong>Archives</strong>, while in <strong>Categories</strong> they are categorized.</li>
+</ul>
+<p>This blog is constructed with <a href="https://hexo.io/">Hexo</a> and <a href="https://github.com/theme-next/hexo-theme-next">NexT</a>. </p>
+<p>Please have fun here!</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>LLM对推荐系统的影响调研笔记</title>
+    <url>/Essay-analysis/RS-LLM-benefit/</url>
+    <content><![CDATA[<p>文章地址：<a href="https://arxiv.org/pdf/2306.05817.pdf">https://arxiv.org/pdf/2306.05817.pdf</a></p>
+<p>文章名：How Can Recommender Systems Benefit from Large Language Models: A Survey</p>
+<span id="more"></span>
+<blockquote>
+<p>推荐系统的流水过程：</p>
+<ul>
+<li><p>用户数据收集<em>User data collection</em></p>
+</li>
+<li><p>特征处理<em>Feature engineering</em></p>
+<p>将原数据进行处理（如独热码）</p>
+</li>
+<li><p>特征编码<em>Feature encoder</em></p>
+<p>生成神经网络的嵌入向量</p>
+</li>
+<li><p>评分/排序函数<em>Scoring Ranking function</em></p>
+</li>
+<li><p>控制器<em>Pipeline controller</em></p>
+</li>
+</ul>
+</blockquote>
+<p>LLM可用于上述过程中除了用户数据收集的部分。</p>
+<p>对于特征编码部分，使用LLM可以丰富语义信息，还可实现跨领域推荐。</p>
+<p>对于评分/排序函数，LLM可用于解决（1）项目评分任务，（2）项目生成任务，（3）混合任务。项目评分任务主要用于针对目标用户，对每个候选项目进行评分，从而获得一个排名列表；项目生成任务直接生成项目的最终排序列表；混合任务上述二者都支持。</p>
+<p>早期的语言模型参数比较小，被用作简单的文本特征编码器等；但随着模型和参数量的增多，LLM出现了指令跟随、推理等能力，因此可被扩展用于推荐系统的其他方面。</p>
+<p>LLM应用于RS中呈现如下趋势：</p>
+<p><img src="/Essay-analysis/RS-LLM-benefit/image-20230728000320090.png" alt="image-20230728000320090"></p>
+<p>从微调+与CRM（传统推荐模型）结合（如BERT+推荐模型）到不微调+不与CRM结合（如ChatGPT），再到微调+不与CRM结合/不微调+与CRM结合。整体趋势如上图中的箭头所示。</p>
+<p>在上述发展过程中，不微调+不与CRM结合的模型效果较差（绿色），但通过增加领域内的协同知识可以提高模型的性能。</p>
+]]></content>
+      <categories>
+        <category>Essay analysis</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Windows安装miniconda和pytorch环境</title>
+    <url>/Windows/windows-conda-pytorch-installation/</url>
+    <content><![CDATA[<p>此处记录windows环境下miniconda以及pytorch环境的建立过程以及需要注意的事项。</p>
+<span id="more"></span>
+<h2 id="conda环境安装与配置"><a href="#conda环境安装与配置" class="headerlink" title="conda环境安装与配置"></a>conda环境安装与配置</h2><blockquote>
+<p>选择miniconda是因为相较于anaconda，miniconda体积较小，删去了很多用不上的功能。</p>
+</blockquote>
+<p>下载地址：<a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a></p>
+<p>在windows环境下，选择windows平台下的64位安装包，即下图中的第一个选项。</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710193210962.png" alt="image-20230710193210962"></p>
+<blockquote>
+<p>linux环境下则要按照指令集选择对应的版本下载安装包。</p>
+</blockquote>
+<p>按照流程安装即可。</p>
+<blockquote>
+<p>按照默认设置将不会把conda加入环境变量中。如果想要手动加入环境变量，以下为环境变量列表：</p>
+<p>（<code>D:\miniconda3</code>是我的miniconda安装路径，加入环境变量时注意修改为自己的路径）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\miniconda3</span><br><span class="line">D:\miniconda3\Library\mingw-w64\bin</span><br><span class="line">D:\miniconda3\Library\usr\bin</span><br><span class="line">D:\miniconda3\Library\bin</span><br><span class="line">D:\miniconda3\Scripts</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="conda虚拟环境搭建"><a href="#conda虚拟环境搭建" class="headerlink" title="conda虚拟环境搭建"></a>conda虚拟环境搭建</h3><p>类似python的virtualenv，conda可以搭建虚拟环境以实现不同环境的隔离，从而允许不同版本的库在不同程序中正确运行。但conda虚拟环境与virtualenv不同的是，不同的虚拟环境中允许安装不同版本的python，更便于用户使用。</p>
+<p>在不同的环境中，命令行的地址前方会显示当前的虚拟环境名称，如下图所示：</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710194554448.png" alt="image-20230710194554448"></p>
+<p>与虚拟环境相关的常用命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create -n <span class="string">&quot;虚拟环境的名称&quot;</span> python=3.x <span class="comment"># 新建虚拟环境</span></span><br><span class="line">conda <span class="built_in">env</span> list <span class="comment"># 查看虚拟环境列表</span></span><br><span class="line">conda activate <span class="string">&quot;虚拟环境的名称&quot;</span> <span class="comment"># 转到某个虚拟环境</span></span><br><span class="line">conda remove -n <span class="string">&quot;虚拟环境的名称&quot;</span> --all <span class="comment"># 删除某个虚拟环境以及内部的所有包</span></span><br></pre></td></tr></table></figure>
+<h3 id="conda第三方库配置"><a href="#conda第三方库配置" class="headerlink" title="conda第三方库配置"></a>conda第三方库配置</h3><p>在conda虚拟环境内部，安装第三方库除了通过pip安装，还可以通过conda安装。</p>
+<p>conda配置第三方库的命令如下：（注意要转到需要安装库的虚拟环境中）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 安装第三方库</span></span><br><span class="line">conda update --all <span class="comment"># 更新该虚拟环境下的所有第三方库</span></span><br><span class="line">conda update <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 更新某一个库</span></span><br><span class="line">conda uninstall <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 卸载某一个库</span></span><br></pre></td></tr></table></figure>
+<h3 id="conda换源"><a href="#conda换源" class="headerlink" title="conda换源"></a>conda换源</h3><p>此处使用清华源。</p>
+<p>先执行<code>conda config --set show_channel_urls yes</code>命令，在用户目录下生成.condarc文件，再往该文件中写入：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch-lts:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">deepmodeling:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/</span></span><br></pre></td></tr></table></figure>
+<p>即可将源换为清华源。</p>
+<h2 id="pytorch安装与配置"><a href="#pytorch安装与配置" class="headerlink" title="pytorch安装与配置"></a>pytorch安装与配置</h2><p>前往pytorch的官网<a href="https://pytorch.org/">https://pytorch.org/</a>，找到选择安装平台与版本的选项栏，选择对应的版本进行安装。</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710205605502.png" alt="image-20230710205605502"></p>
+<p>选择使用conda环境安装，再选择cuda版本，即可得到对应的指令。运行指令即可安装完pytorch。</p>
+<blockquote>
+<p>低版本的pytorch可以在高版本的cuda上运行。但最好选择与cuda版本相适应的pytorch版本进行安装。</p>
+</blockquote>
+<p>安装完后，可以通过如下的指令检查gpu是否可用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.cuda.is_available()</span><br><span class="line"><span class="literal">True</span>	<span class="comment"># True表示cuda可用</span></span><br></pre></td></tr></table></figure>
+<h2 id="jupyter-notebook安装与配置"><a href="#jupyter-notebook安装与配置" class="headerlink" title="jupyter notebook安装与配置"></a>jupyter notebook安装与配置</h2><p>通过以下指令来安装jupyter notebook。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install jupyter</span><br></pre></td></tr></table></figure>
+<p>安装完成后，可通过命令行输入<code>jupyter notebook</code>来启动jupyter notebook。</p>
+<blockquote>
+<p>取消jupyter notebook密码：</p>
+<ol>
+<li>输入<code>jupyter notebook --generate-config</code>，生成一个py文件；</li>
+<li>找到py文件中的<code>\#c.NotebookApp.token = &#39;&lt;generated&gt;&#39;</code>，改为<code>c.NotebookApp.token = &#39;&#39;</code>；</li>
+<li>重启jupyter notebook即可。</li>
+</ol>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Ray部署与测试文档</title>
+    <url>/Linux/Ray-deployment/</url>
+    <content><![CDATA[<p>本文档为OSH-2023 My-Glow小组的Lab4文档。<br><span id="more"></span></p>
+<h1 id="Ray-部署文档"><a href="#Ray-部署文档" class="headerlink" title="Ray 部署文档"></a>Ray 部署文档</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>Ubuntu版本：22.04.2</li>
+<li>python版本：3.10.10</li>
+<li>pip版本：23.0.1</li>
+</ul>
+<h2 id="单机版Ray部署"><a href="#单机版Ray部署" class="headerlink" title="单机版Ray部署"></a>单机版Ray部署</h2><h3 id="安装Ray"><a href="#安装Ray" class="headerlink" title="安装Ray"></a>安装Ray</h3><p>Ray的安装基于pip。运行以下命令安装Ray：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo pip3 install -U <span class="string">&quot;ray[default]&quot;</span></span><br></pre></td></tr></table></figure>
+<p>自动安装了ray2.3.1版本。</p>
+<blockquote>
+<p>根据官方文档，运行<code>sudo pip3 install -U ray</code>也可；与安装<code>ray[default]</code>的区别在于<code>ray[default]</code>会多安装一些依赖。</p>
+</blockquote>
+<h3 id="Ray-cluster部署"><a href="#Ray-cluster部署" class="headerlink" title="Ray cluster部署"></a>Ray cluster部署</h3><p>Ray集群的部署要求集群内的机器在同一局域网下，并且python和Ray版本相同。</p>
+<ul>
+<li><p>在主节点上：运行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ray start --<span class="built_in">head</span> --port=6379</span><br></pre></td></tr></table></figure>
+<p>得到如下输出，则Ray启动成功：</p>
+<p><img src="/Linux/Ray-deployment/image-20230606154156212.png" alt="image-20230606154156212"></p>
+</li>
+<li><p>在子结点上：运行如下命令：（该命令即为主节点上运行时输出的命令）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ray start --address=<span class="string">&#x27;198.18.0.1:6379&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>得到如下输出，则Ray子结点已连接到主节点上：</p>
+<p><img src="/Linux/Ray-deployment/image-20230606154333125.png" alt="image-20230606154333125"></p>
+</li>
+<li><p>要结束ray，只需在主节点上运行<code>ray stop</code>即可。</p>
+</li>
+</ul>
+<h3 id="Ray监控"><a href="#Ray监控" class="headerlink" title="Ray监控"></a>Ray监控</h3><p>在主节点上登陆<code>localhost:8265</code>即可看到所有节点的监控信息。</p>
+<p><img src="/Linux/Ray-deployment/image-20230606160319466.png" alt="image-20230606160319466"></p>
+<p>这里使用了旧ui。</p>
+<h2 id="docker部署Ray"><a href="#docker部署Ray" class="headerlink" title="docker部署Ray"></a>docker部署Ray</h2><p>首先docker的安装见<a href="https://docs.docker.com/engine/install/ubuntu/">官方文档</a>，换源见<a href="https://mirrors.ustc.edu.cn/help/dockerhub.html">中科大docker镜像</a></p>
+<p>Dockerfile如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . /</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo sed -i <span class="string">&#x27;s/cn.archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo sed -i <span class="string">&#x27;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo sed -i <span class="string">&#x27;s/security.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo apt update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo apt install -y python3 &amp;&amp; sudo apt install -y python3-pip</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip3 config ser global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip3 install -U <span class="string">&quot;ray[default]&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>使用该镜像来创建ray镜像。步骤如下：</p>
+<ol>
+<li><p>在目录下创建Dockerfile，并将测试的python文件复制到同一文件夹下，如下图：</p>
+<p><img src="/Linux/Ray-deployment/image-20230606172913907.png" alt="image-20230606172913907"></p>
+</li>
+<li><p>构建docker镜像：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker build -t ray_cluster .</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-t参数的目的是将打包的镜像文件命名。</p>
+</blockquote>
+</li>
+<li><p>运行docker镜像：</p>
+<p>头结点：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -idt --name ray_head ray_cluster</span><br></pre></td></tr></table></figure>
+<p>子结点：（此处子结点开启了两个，可按需求开启）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -idt --name ray_node1 ray_cluster</span><br><span class="line">docker run -idt --name ray_node2 ray_cluster</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-d参数的目的是后台执行容器；-it使得容器不会自动退出，并能够通过终端访问。</p>
+</blockquote>
+</li>
+<li><p>进入容器，并开启/连接Ray服务</p>
+<p>对于头结点：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it ray_head bin/bash</span><br><span class="line"><span class="comment"># 以下为容器内部操作</span></span><br><span class="line">ray start --<span class="built_in">head</span> --port=6379</span><br></pre></td></tr></table></figure>
+<p>可以得到与单机版部署类似的输出。</p>
+<p>对于子结点：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it ray_node1 bin/bash</span><br><span class="line"><span class="comment"># 以下为容器内部操作</span></span><br><span class="line"><span class="comment"># address为头结点输出的地址</span></span><br><span class="line">ray start --address=<span class="string">&#x27;172.17.0.2:6379&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在头结点内运行测试文件即可开始测试。</p>
+</li>
+</ol>
+<h1 id="Ray性能测试与优化"><a href="#Ray性能测试与优化" class="headerlink" title="Ray性能测试与优化"></a>Ray性能测试与优化</h1><h2 id="测试任务"><a href="#测试任务" class="headerlink" title="测试任务"></a>测试任务</h2><p>我们组选用的测试任务是计算一定范围内（暴力计算）质数的个数。</p>
+<blockquote>
+<p>选用该任务的原因是该任务计算量大，能够体现出分布式计算的优点；同时暴力计算便于并行化，程序编写简单，且运行时间适中，避免偶然因素影响实验结果。</p>
+</blockquote>
+<p>暴力计算素数个数的核心代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">n: <span class="built_in">int</span></span>):</span><br><span class="line">    result = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(n ** <span class="number">0.5</span>) + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> n % k == <span class="number">0</span>:</span><br><span class="line">            result = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">count_primes</span>(<span class="params">n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n):</span><br><span class="line">        <span class="keyword">if</span> is_prime(k):</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line"></span><br><span class="line">count_primes(<span class="number">10000000</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Ray性能指标"><a href="#Ray性能指标" class="headerlink" title="Ray性能指标"></a>Ray性能指标</h2><p>性能指标如下：</p>
+<ul>
+<li><p>CPU占用率：指计算任务在CPU上的负载。</p>
+<p>CPU占用率代表了任务在不同节点内对CPU的压力。</p>
+</li>
+<li><p>总执行时间：指同一程序从开始执行到执行完毕的时间。</p>
+<p>总执行时间代表了一项任务分配在不同节点后的性能表现。</p>
+</li>
+<li><p>平均响应时间：指系统对请求做出响应的平均时间</p>
+<p>平均响应时间代表了一个系统对大量请求的处理能力；在Ray系统内可指代从程序开始执行到Ray开始真正计算的间隔。</p>
+</li>
+<li><p>吞吐量：指系统在单位时间内处理请求的数量。</p>
+<p>吞吐量代表了一个系统单位时间内能够处理请求的数量。</p>
+</li>
+<li><p>响应时间方差：指将所有节点的响应时间排成数列，该数列的方差。</p>
+<p>响应时间方差从另一方面代表了一个系统对大量请求的处理能力；如果方差过大，则代表该系统分配任务存在不均衡的情况，该系统的性能大概率会比较低。</p>
+</li>
+</ul>
+<p>在本实验中，我们将监测CPU占用率和总执行时间两个指标；原因是这两个指标易于测量：CPU占用率可以从Ray控制台上直接得到；总执行时间可以在程序中计时得到。</p>
+<blockquote>
+<p>程序计时测量执行时间可能存在系统误差，但拉长执行时间后该系统误差会被稀释，对整体的影响较小，因此可以使用。</p>
+</blockquote>
+<h2 id="不使用Ray进行测试"><a href="#不使用Ray进行测试" class="headerlink" title="不使用Ray进行测试"></a>不使用Ray进行测试</h2><p>CPU使用率测试结果如下：（使用top监测）</p>
+<p><img src="/Linux/Ray-deployment/image-20230607170647250.png" alt="image-20230607170647250"></p>
+<p>总执行时间时间测试结果如下：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607080229143.png" alt="image-20230607080229143" style="zoom:67%;"></p>
+<p>上述结果汇总为表格如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运行平台</th>
+<th style="text-align:center">CPU占用率</th>
+<th style="text-align:center">执行时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">不使用Ray</td>
+<td style="text-align:center">98%+（单核）</td>
+<td style="text-align:center">62.56s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>该结果将作为使用Ray测试时的性能基准。</p>
+<h2 id="Ray单机性能测试"><a href="#Ray单机性能测试" class="headerlink" title="Ray单机性能测试"></a>Ray单机性能测试</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Ray.remote</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Compute</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        result = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(n ** <span class="number">0.5</span>) + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> n % k == <span class="number">0</span>:</span><br><span class="line">                result = <span class="literal">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">count_primes</span>(<span class="params">self, start: <span class="built_in">int</span>, end: <span class="built_in">int</span>, step: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(start, end, step):</span><br><span class="line">            <span class="keyword">if</span> Compute.is_prime(k):</span><br><span class="line">                self.count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> self.count</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">result</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.count</span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    Ray.init()</span><br><span class="line">    init_time = time.time()</span><br><span class="line">    computer = Compute.remote()</span><br><span class="line">    futures = []</span><br><span class="line">    future = computer.count_primes.remote(<span class="number">2</span>, <span class="number">10000000</span>, <span class="number">1</span>)</span><br><span class="line">    futures.append(future)</span><br><span class="line">    result = Ray.get(futures)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;total time: &quot;</span>, time.time()-init_time)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在一台虚拟机上运行一个头结点和两个子结点，作为Ray集群。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>运行计算质数个数的代码，得到如下结果：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607165726373.png" alt="image-20230607165726373"></p>
+<p>运行过程中Ray的控制台如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607165619816.png" alt="image-20230607165619816"></p>
+<p>观测top内CPU的使用率如下：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171423096.png" alt="image-20230607171423096"></p>
+<p>top内显示Ray计算只用了一个进程，显然没有对多核计算进行优化。</p>
+<p>总结出单机运行Ray的性能指标如下表所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运行平台</th>
+<th style="text-align:center">CPU占用率</th>
+<th style="text-align:center">执行时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">不使用Ray</td>
+<td style="text-align:center">98%+（单核）</td>
+<td style="text-align:center">62.56s</td>
+</tr>
+<tr>
+<td style="text-align:center">使用Ray</td>
+<td style="text-align:center">&lt;20%（所有核）~100%（单核）</td>
+<td style="text-align:center">64.32s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>可以看到，程序部署在Ray后，运行时间相比未部署的时间反而长了2s（应为Ray分配任务的开销），且CPU的利用率仅不到20%，说明上述代码并没有利用到Ray分布式集群强大的运算能力，应该进行优化。</p>
+<h2 id="Ray单机优化性能测试"><a href="#Ray单机优化性能测试" class="headerlink" title="Ray单机优化性能测试"></a>Ray单机优化性能测试</h2><p>针对上述代码无法利用到Ray性能的问题，考虑将测试代码进行优化。</p>
+<p>最初的测试代码只是将任务整体交给Ray，因此用不到Ray的并行计算。因此，在计算任务中，将所有任务手动拆分为小块，并分配给Ray，性能预期将会提升。</p>
+<p>修改main函数如下所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    Ray.init()</span><br><span class="line">    init_time = time.time()</span><br><span class="line">    <span class="comment"># step: 指分组数，每一组内检查的数差值为step</span></span><br><span class="line">    step = <span class="number">10</span></span><br><span class="line">    futures = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(step):</span><br><span class="line">        computer = Compute.remote()</span><br><span class="line">        future = computer.count_primes.remote(i, <span class="number">10000000</span>, step)</span><br><span class="line">        futures.append(future)</span><br><span class="line">    results = Ray.get(futures)</span><br><span class="line">    <span class="comment"># 因为计算时把0和1也算入质数，因此在这里减去</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(results) - <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;total time: &quot;</span>, time.time()-init_time)</span><br></pre></td></tr></table></figure>
+<p>代码将待测试的所有数分为10组，并调用多个<code>remote()</code>方法生成多个计算实例并同时计算，从而达到更高的计算性能。</p>
+<p>测试结果如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171912591.png" alt="image-20230607171912591"></p>
+<p>运行过程中Ray的控制台如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171116498.png" alt="image-20230607171116498"></p>
+<blockquote>
+<p>图中显示第二个节点CPU使用率显著低于其他两个节点，可能原因是其正处于被分配过程中，因此可视为误差。</p>
+</blockquote>
+<p>观测top内CPU的使用率如下：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171158315.png" alt="image-20230607171158315"></p>
+<p>可见Ray自动开启了多个compute进程，提高了运算速度。</p>
+<p>由上述所有总结出单机运行Ray的性能指标如下表所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运行平台</th>
+<th style="text-align:center">CPU占用率</th>
+<th style="text-align:center">执行时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">不使用Ray</td>
+<td style="text-align:center">98%+（单进程）</td>
+<td style="text-align:center">62.56s</td>
+</tr>
+<tr>
+<td style="text-align:center">使用Ray</td>
+<td style="text-align:center">&lt;20%（对任一节点）~100%（单进程）</td>
+<td style="text-align:center">64.32s</td>
+</tr>
+<tr>
+<td style="text-align:center">使用Ray（代码已优化）</td>
+<td style="text-align:center">99%+（对任一节点） ~100%（多进程）</td>
+<td style="text-align:center">20.82s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>优化过后代码的性能提升约为<strong>3倍</strong>，说明利用到并行的代码得到了质的性能提升。</p>
+<h2 id="Ray分布式性能测试"><a href="#Ray分布式性能测试" class="headerlink" title="Ray分布式性能测试"></a>Ray分布式性能测试</h2><p>分布式测试在两台虚拟机上进行。在一台虚拟机上运行Ray的头节点，在另一台虚拟机上运行子结点，从而构成Ray集群。</p>
+<p>Ray的控制台如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608224918948.png" alt="image-20230608224918948"></p>
+<p>两节点的IP地址不同可以证明Ray集群是在两台机器上搭建的。</p>
+<p>在头结点运行测试程序，得到如下结果：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608225313887.png" alt="image-20230608225313887"></p>
+<p>观察到两台虚拟机的CPU使用率如下，即CPU负荷均达到最大：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608225137644.png" alt="image-20230608225137644"></p>
+<p><img src="/Linux/Ray-deployment/image-20230608225154986.png" alt="image-20230608225154986"></p>
+<p>Ray的控制台输出如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608225254043.png" alt="image-20230608225254043"></p>
+<p>由上述测试结果可以得到Ray已经在多机上完成了分布式部署。</p>
+<h2 id="Docker部署性能测试"><a href="#Docker部署性能测试" class="headerlink" title="Docker部署性能测试"></a>Docker部署性能测试</h2><p>Docker的部署过程见部署文档。在完成部署文档的内容后，机器中应该已经有Docker的镜像了。</p>
+<p>在终端1上运行docker镜像，并在内部的终端中运行<code>ray start --head --port=6379</code>，得到如下输出：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609104415409.png" alt="image-20230609104415409"></p>
+<p>类似的，在终端2的docker内运行<code>ray start --address=&#39;172.17.0.2:6379&#39;</code>，有以下输出：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609104628643.png" alt="image-20230609104628643"></p>
+<p>由于docker内无法通过浏览器显示ray控制台，因此在头结点内使用<code>ray status</code>查看集群的状态：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609104738643.png" alt="image-20230609104738643" style="zoom:50%;"></p>
+<p>可见在docker搭建的ray集群内有两个节点，即两台终端分别对应的节点。</p>
+<p>在头结点内运行测试文件，得到如下输出：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609105008578.png" alt="image-20230609105008578"></p>
+<p>这个结果与单机上部署多个ray节点测试结果类似，说明在docker上部署是成功的。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>推荐系统综述 文章分析</title>
+    <url>/Essay-analysis/recommendation-system-survey/</url>
+    <content><![CDATA[<p>文章地址：<a href="https://arxiv.org/abs/2104.13030">https://arxiv.org/abs/2104.13030</a></p>
+<p>文章名：<strong>A Survey on Accuracy-oriented Neural Recommendation: From Collaborative Filtering to Information-rich Recommendation</strong></p>
+<p>面向准确性的神经推荐综述：从协同过滤到信息丰富推荐<br><span id="more"></span></p>
+<h2 id="Abstract-amp-Conclusion"><a href="#Abstract-amp-Conclusion" class="headerlink" title="Abstract &amp; Conclusion"></a>Abstract &amp; Conclusion</h2><p>深度学习对推荐模型产生较大影响；</p>
+<p>本文将基于深度学习的推荐系统领域的工作分为：</p>
+<ul>
+<li>协同过滤(collaborative filtering)</li>
+<li>内容丰富的推荐(content enriched recommendation)</li>
+<li>时间顺序推荐(temporal/sequential recommendation)</li>
+</ul>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>推荐系统的研究可追溯到1990，基于内容的启发式和协同过滤；矩阵分解模型（2008~2016）；效率低；</li>
+<li>2010中期，深度学习：从具有复杂模式的大数据中学习特别有利；推荐系统也出现了很多基于神经网络的工作，即神经推荐模型(neural recommender models)；</li>
+</ul>
+<h3 id="与其他综述的不同"><a href="#与其他综述的不同" class="headerlink" title="与其他综述的不同"></a>与其他综述的不同</h3><ul>
+<li>现有综述大多聚焦于特定主题，或遵循深度学习的分类方式；</li>
+<li>本综述将着眼于准确性。</li>
+</ul>
+<h3 id="组织结构"><a href="#组织结构" class="headerlink" title="组织结构"></a>组织结构</h3><ul>
+<li><p>学习推荐的问题可抽象为：</p>
+<script type="math/tex; mode=display">
+\hat{y}_{u,i,c}=f(D_u,D_i,D_c)</script><p>给定用户$u$、物品$i$、上下文$c$的数据$D_u,D_i,D_c$，让函数$f$学会预测可能性$y$。</p>
+</li>
+<li><p>不同模型的特点：</p>
+<ul>
+<li>协同过滤模型：忽略$D_c$，只使用用户和物品的ID和<strong>交互</strong>历史数据；</li>
+<li>将用户和物品的辅助信息基层到推荐系统的模型（内容丰富模型）：加入辅助信息（用户和物品信息），忽略$D_c$；</li>
+<li>使用上下文数据的模型（context-aware model）：三种数据全部考虑；关注最常见的时间上下文（temporal context）；</li>
+</ul>
+</li>
+<li>可将上下文信息视为用户数据的一部分；</li>
+</ul>
+<h2 id="Collaborative-Filtering-Models-CF"><a href="#Collaborative-Filtering-Models-CF" class="headerlink" title="Collaborative Filtering Models (CF)"></a>Collaborative Filtering Models (CF)</h2><p>利用所有用户的协作行为预测目标用户的行为</p>
+<p>使用基于记忆的模型 -&gt; 基于矩阵分解的模型</p>
+<p>当前：</p>
+<ul>
+<li>用户和物品的表示建模；</li>
+<li>给定表示，用户和物品交互建模</li>
+</ul>
+<h3 id="表示学习"><a href="#表示学习" class="headerlink" title="表示学习"></a>表示学习</h3><p>目标：学习用户嵌入矩阵P和物品嵌入矩阵Q</p>
+<p>难点：用户-物品交互行为的稀疏性。</p>
+<h4 id="历史行为聚合增强模型-history-behavior-attention-aggregation-models"><a href="#历史行为聚合增强模型-history-behavior-attention-aggregation-models" class="headerlink" title="历史行为聚合增强模型(history behavior attention aggregation models)"></a>历史行为聚合增强模型(history behavior attention aggregation models)</h4><p>传统方法使用独热码关联用户和物品；增加历史信息以达到更好地建模。仍然使用线性矩阵分解。例：FISM model、SVD++</p>
+<p>ACF增加神经注意机制：为交互过的物品分配权重，表明对用户表示的重要性；</p>
+<p><img src="/Essay-analysis/recommendation-system-survey/image-20230502215120856.png" alt="image-20230502215120856"></p>
+<p>$\alpha(u,j)$：用户与物品间注意力权重</p>
+<p>NAIS删除用户项，便于对不同用户同时建模；</p>
+<p><img src="/Essay-analysis/recommendation-system-survey/image-20230502215659301.png" alt="image-20230502215659301"></p>
+<p>$\alpha(i,j)$：两件物品间注意力权重</p>
+<p>应用例：DeepICF、DIN</p>
+<h4 id="基于自动编码器的模型-autoencoder-based-representation-learning"><a href="#基于自动编码器的模型-autoencoder-based-representation-learning" class="headerlink" title="基于自动编码器的模型(autoencoder based representation learning)"></a>基于自动编码器的模型(autoencoder based representation learning)</h4><p>基本路径：输入不完整的用户物品矩阵 -&gt; 编码器学习隐藏表示 -&gt; 解码器重建输入</p>
+<p>方式：</p>
+<ul>
+<li>输入每个用户的历史记录学习用户偏好；</li>
+<li>输入用户对物品的评分学习用户偏好；</li>
+</ul>
+<p>模型扩展：</p>
+<ul>
+<li>使用自动编码器变体（使用深度学习技术）；</li>
+<li>设计两个并行编码器学习用户和项目表示，使用内积模拟偏好；</li>
+</ul>
+<p><strong>聚合历史行为，可视为基于历史行为的扩展</strong></p>
+<h4 id="图学习方法-graph-learning-approaches"><a href="#图学习方法-graph-learning-approaches" class="headerlink" title="图学习方法(graph learning approaches)"></a>图学习方法(graph learning approaches)</h4><p>使用图神经网络对图数据结构建模。</p>
+<p>例：SpectralCF、GC-MC、NGCF</p>
+<ul>
+<li>基于神经图的CF模型和经典GNN不同，因此提出新模型LR-GCCF/LightGCN等消除不必要的深度学习步骤；简化的模型效果更好。</li>
+</ul>
+<h3 id="交互建模"><a href="#交互建模" class="headerlink" title="交互建模"></a>交互建模</h3><h4 id="基于内积的指标"><a href="#基于内积的指标" class="headerlink" title="基于内积的指标"></a>基于内积的指标</h4><p>以用户embedding和物品embedding的内积估计偏好；</p>
+<p>主要限制：</p>
+<ul>
+<li>违反三角不等式；缺乏用户之间、物品之间的关联；</li>
+<li>线性交互建模，无法得到复杂关系</li>
+</ul>
+<h4 id="基于距离的指标"><a href="#基于距离的指标" class="headerlink" title="基于距离的指标"></a>基于距离的指标</h4><p>使用距离度量作为交互函数；</p>
+<p>CML使用欧几里得空间的距离；使用翻译原理模拟行为；</p>
+<p>LRML引入关系向量（可训练），效果更好。</p>
+<h4 id="基于神经网络的指标"><a href="#基于神经网络的指标" class="headerlink" title="基于神经网络的指标"></a>基于神经网络的指标</h4><p>使用MLP、CNN等作为构建块，挖掘交互的复杂和非线性模式；</p>
+<p>NCF使用MLP对每个用户-物品对建模；加入MF组件提高推荐质量。</p>
+<p>基于CNN：侧重高阶相关性，增加复杂度和成本。</p>
+<p>使用AE填补交互矩阵的空白；</p>
+<h3 id="GNN优越性"><a href="#GNN优越性" class="headerlink" title="GNN优越性"></a>GNN优越性</h3><ul>
+<li>数据结构：用户-物品交互可抽象为二分图；</li>
+<li>可显式编码用户-物品交互的关键协同过滤信号（？）</li>
+</ul>
+<h2 id="Content-Enriched-Recommendation"><a href="#Content-Enriched-Recommendation" class="headerlink" title="Content-Enriched Recommendation"></a>Content-Enriched Recommendation</h2><p>CF中仅对用户的行为模式进行了编码，而CER使用辅助数据；</p>
+<p>辅助数据分为基于内容的信息和上下文感知数据：</p>
+<p>内容信息与用户和物品有关；上下文信息显示了用户决策的环境，如时间数据等；</p>
+<h3 id="用户和项目的一般特征"><a href="#用户和项目的一般特征" class="headerlink" title="用户和项目的一般特征"></a>用户和项目的一般特征</h3><p>FM(Factorization Machine)：见<a href="https://zhuanlan.zhihu.com/p/109541098">FM</a></p>
+<p>FM优点：对稀疏的数据同样有效，并减少参数大小；</p>
+<h4 id="基于MLP（多层感知机）的高阶建模"><a href="#基于MLP（多层感知机）的高阶建模" class="headerlink" title="基于MLP（多层感知机）的高阶建模"></a>基于MLP（多层感知机）的高阶建模</h4><p>使用MLP发现高阶相关性；由于黑盒的存在，需要预训练或结构优化。</p>
+<p>DeepCrossing：加入残差结构；</p>
+<p>NFM：双交互操作；</p>
+<p>PNN：按bit的交互建模；</p>
+<h4 id="用于K阶建模的交叉网络"><a href="#用于K阶建模的交叉网络" class="headerlink" title="用于K阶建模的交叉网络"></a>用于K阶建模的交叉网络</h4><p>设计网络时就设计了交叉网络，在向量级别进行交叉交互；</p>
+<p>$x_k=x_0x_{k-1}w_k+b_k+x_{k-1}$</p>
+<h4 id="树增强建模"><a href="#树增强建模" class="headerlink" title="树增强建模"></a>树增强建模</h4><p>使用树来展现交叉特征；</p>
+<p>TEM：决策树提取高阶交互特征，将得到的交互特征输入到注意力模型中。</p>
+<h3 id="文本内容信息"><a href="#文本内容信息" class="headerlink" title="文本内容信息"></a>文本内容信息</h3><p>基于神经网络的NLP模型，进行文本增强的推荐。</p>
+<p>内容输入可分为：与项目或用户有关的内容描述；用户-项目对。第二类在多数情况下退化为第一类。</p>
+<h4 id="基于自动编码器-AE-的模型"><a href="#基于自动编码器-AE-的模型" class="headerlink" title="基于自动编码器(AE)的模型"></a>基于自动编码器(AE)的模型</h4><p>使用自动编码器（或变体）进行隐藏内容的提取。</p>
+<p>CDL(Collaborative Deep Learning)：使用堆叠去噪AE学习物品内容的隐藏表示，优化过程通过学习压缩表示和重建过程捕捉内容信息；</p>
+<p>$q_i=f_e(x_i)+\theta_i$</p>
+<h4 id="词嵌入模型"><a href="#词嵌入模型" class="headerlink" title="词嵌入模型"></a>词嵌入模型</h4><p>AE没有考虑到文本输入的独一性，因此引入词嵌入模型。</p>
+<p>ConvMF：结合了卷积神经网络和概率矩阵分解，通过TextCNN模型进行学习。</p>
+<p>基于评论的深度推荐模型：如DeepCoNN使用并行的TextCNN模型分别学习用户的评论和物品的评论，再使用分解机学习交互。</p>
+<p>目标评论信息不可用时：TransNet。</p>
+<h4 id="注意力模型"><a href="#注意力模型" class="headerlink" title="注意力模型"></a>注意力模型</h4><p>给不同的内容片段分配不同权重，从而自动选择出信息丰富的关键词进行推荐。</p>
+<h4 id="文本解释"><a href="#文本解释" class="headerlink" title="文本解释"></a>文本解释</h4><p>可以为推荐系统提供文本解释。</p>
+<p>基于提取的文本解释：可通过注意力机制，选择具有较大注意力权重的文本片段作为解释的内容。</p>
+<p>基于生成的文本解释：通过编码器和解码器机制，输入用户与物品的信息，并输出评论。使用了RNN和MLP技术。</p>
+<h3 id="多媒体信息"><a href="#多媒体信息" class="headerlink" title="多媒体信息"></a>多媒体信息</h3><p>多媒体信息包括图片、视频、音频等。</p>
+<h4 id="图片推荐"><a href="#图片推荐" class="headerlink" title="图片推荐"></a>图片推荐</h4><p>可分为两类：基于内容的模型、混合推荐模型。</p>
+<ol>
+<li><p>基于内容的模型：适用于依赖视觉影响的情况。使用CNN提取视觉信息，并与文本结合。</p>
+</li>
+<li><p>混合推荐模型：同时使用协同信号和视觉内容进行推荐，可以提高性能。</p>
+<p>VBPR：使用视觉内容进行统一混合推荐：在两个空间内投影，并结合两个空间内的用户偏好学习预测偏好。</p>
+<p>在VBPR基础上也有进一步拓展，如时间演化、图像关联位置表示等。</p>
+<p>此外还有GNN方法。</p>
+</li>
+</ol>
+<h4 id="视频推荐"><a href="#视频推荐" class="headerlink" title="视频推荐"></a>视频推荐</h4><p>提取视频、音频特征后通过神经网络进行融合。</p>
+<p>ACF模型：可总结视频历史记录部分的偏好。</p>
+<h3 id="社交网络"><a href="#社交网络" class="headerlink" title="社交网络"></a>社交网络</h3><p>社交网络中存在社交关系，兴趣存在相关性。可分为两类：社会关联增强和正则化模型，以及基于GNN的模型。</p>
+<h4 id="社会关联增强和正则化模型"><a href="#社会关联增强和正则化模型" class="headerlink" title="社会关联增强和正则化模型"></a>社会关联增强和正则化模型</h4><p>将用户行为视为社交领域，将物品偏好行为视为物品领域，并将两种行为融合起来。</p>
+<p>可以通过RNN、注意力模型等进行建模。</p>
+<h4 id="基于GNN的模型"><a href="#基于GNN的模型" class="headerlink" title="基于GNN的模型"></a>基于GNN的模型</h4><p>现实世界中社会扩散过程是递归的，即每个用户都受到全局图结构的递归影响。因此使用GNN模型提高模拟效果。例：DiffNet；</p>
+<p>可以使用异构GNN进行建模。例：DiffNet++，效果最好。</p>
+<h3 id="知识图谱-KG"><a href="#知识图谱-KG" class="headerlink" title="知识图谱(KG)"></a>知识图谱(KG)</h3><p>知识图谱提供了用户与物品之间的侧面信息。可分为三类：基于路径的模型、基于正则化的模型、基于GNN的模型。</p>
+<h4 id="基于路径的模型"><a href="#基于路径的模型" class="headerlink" title="基于路径的模型"></a>基于路径的模型</h4><p>用户到物品的路径可以通过连续的序列表示，通过描述该路径即可得到偏好。但由于获得路径较为复杂且规模较大，难以应用。</p>
+<h4 id="基于正则化的模型"><a href="#基于正则化的模型" class="headerlink" title="基于正则化的模型"></a>基于正则化的模型</h4><p>知识图谱可以作为额外的损失项用于正则化模型的学习。例：CKE</p>
+<h4 id="基于GNN的模型-1"><a href="#基于GNN的模型-1" class="headerlink" title="基于GNN的模型"></a>基于GNN的模型</h4><p>通过GNN确保高阶连通性。例：KGAT</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>可以通过增加文本、多媒体、社交网络等辅助数据来提升推荐性能，关键是辅助数据的选择和集成方法。</p>
+<p>使用注意力机制可以筛选出最相关的信息；使用GNN方法可以得到更好的结构信息以及高阶相关性。</p>
+<h2 id="Temporal-amp-Sequential-Models"><a href="#Temporal-amp-Sequential-Models" class="headerlink" title="Temporal &amp; Sequential Models"></a>Temporal &amp; Sequential Models</h2><p>用户的偏好是随时间变化的，该类模型就是要找到用户的动态偏好或偏好随时间的变化。</p>
+<p>可分为基于时间的推荐、基于会话的推荐、以及基于时间和会话的推荐。</p>
+<h3 id="基于时间的推荐"><a href="#基于时间的推荐" class="headerlink" title="基于时间的推荐"></a>基于时间的推荐</h3><p>大多基于RNN实现。还可考虑上下文因素，如社交影响等来提高模型性能。</p>
+<p>例：RRN（递归推荐网络）</p>
+<p>最近研究增加了记忆网络等模块用于储存记忆，从而更好地捕捉用户的长期和短期兴趣。</p>
+<h3 id="基于会话的推荐"><a href="#基于会话的推荐" class="headerlink" title="基于会话的推荐"></a>基于会话的推荐</h3><p>现实世界中常遇到匿名用户（用户ID不可用）的短会话数据，因此引入基于会话的推荐。</p>
+<p>例：GRU4REC：类似RNN，递归地更新隐藏状态并输出物品。</p>
+<p>同样的，存在基于注意力机制、GNN的模型。</p>
+<h3 id="基于时间和会话的推荐"><a href="#基于时间和会话的推荐" class="headerlink" title="基于时间和会话的推荐"></a>基于时间和会话的推荐</h3><p>该类模型同时使用时间和会话进行学习。</p>
+<p>可分为两类：第一类学习用户的长期偏好和短期动态偏好，第二类学习统一的用户表示。</p>
+<ol>
+<li><p>长期/短期偏好</p>
+<p>从历史行为得到长期偏好，从最近的会话得到短期偏好。可以使用分层的注意力网络进行建模。</p>
+</li>
+<li><p>统一用户表示</p>
+<p>使用三维神经网络进行推荐。例：Caser</p>
+</li>
+</ol>
+<p>同样存在使用GNN的模型进行推荐，且表现出色。</p>
+<h2 id="Discussion-and-Future-Directions"><a href="#Discussion-and-Future-Directions" class="headerlink" title="Discussion and Future Directions"></a>Discussion and Future Directions</h2><p>仍有以下方面可以进行优化：</p>
+<ol>
+<li>推荐的Benchmark。推荐方式和场景多种多样，如何为各种推荐方式指定一套统一的Benchmark十分重要。</li>
+<li>图推理技术与自监督学习。图上深度学习十分成功，但自然的图推荐技术尚可改进；将自监督学习整合到推荐中也可解决数据稀疏性等问题。</li>
+<li>多目标社会公益推荐。以前的推荐系统大多只关注推荐准确性，但忽略了社会方面的问题，可能造成偏差。</li>
+<li>复现性。神经网络对初始化、调参等许多方面的依赖程度较高且十分敏感，进行性能测试十分困难。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Essay analysis</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Ubuntu虚拟机搭建</title>
+    <url>/Linux/Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>最近vmware workstation出17版本了，加上之前Ubuntu磁盘管理出了一些问题，识别不到虚拟机新分配的硬盘空间，于是打算重装一下Ubuntu，记录一下过程。</p>
+<span id="more"></span>
+<h2 id="安装VMware-Workstation-17"><a href="#安装VMware-Workstation-17" class="headerlink" title="安装VMware Workstation 17"></a>安装VMware Workstation 17</h2><p>安装包地址：<a href="https://www.vmware.com/go/getworkstation-win">VMware Workstation 17</a></p>
+<p>许可证：MC60H-DWHD5-H80U9-6V85M-8280D</p>
+<h2 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h2><p>此处使用了Ubuntu的22.04.1版本。镜像位于<a href="https://mirrors.ustc.edu.cn/ubuntu-releases/22.04.1/ubuntu-22.04.1-desktop-amd64.iso">USTC ubuntu镜像</a>。</p>
+<p>推荐使用“典型”安装方式。按照个人电脑的配置进行CPU、内存和硬盘的分配；此处我分配了256GB的硬盘和8GB的内存，CPU个数为1，CPU内核个数为16。其余选项默认。此处分配了较大的空间，主要目的是防止以后有磁盘空间不够的情况出现。</p>
+<p>Ubuntu出现安装界面时，选择“minimum installation”，避免安装大量的无用软件；取消勾选“download updates”，待安装完成后在进行update。</p>
+<blockquote>
+<p>不勾选自动更新是因为此时未换源，更新速度很可能极慢。</p>
+</blockquote>
+<p>安装完成后Ubuntu就可以使用了，但是为了更好地使用，还需要进行一定的配置。</p>
+<h2 id="配置Ubuntu"><a href="#配置Ubuntu" class="headerlink" title="配置Ubuntu"></a>配置Ubuntu</h2><h3 id="换软件源-USTC源"><a href="#换软件源-USTC源" class="headerlink" title="换软件源(USTC源)"></a>换软件源(USTC源)</h3><p>打开终端，输入以下命令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo sed -i <span class="string">&#x27;s/cn.archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span><br><span class="line">sudo sed -i <span class="string">&#x27;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span><br><span class="line">sudo sed -i <span class="string">&#x27;s/security.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<p>可将软件源更换为ustc源。再打开sources.list，可见所有的archive.ubuntu.com均换成了mirrors.ustc.edu.cn。</p>
+<blockquote>
+<p>sudo为使用管理员权限执行命令；sed为linux中的一个文本脚本编辑器；后续参数<code>s/a/b/g</code>将所有的a替换为b。</p>
+<p>sources.list的位置即为最后的参数<code>etc/apt/sources.list</code>。</p>
+</blockquote>
+<p>换源之后，apt下载软件包速度会变快，并能防止连接不上服务器的情况发生。</p>
+<p>再进行软件源的更新与软件的更新</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade -y</span><br></pre></td></tr></table></figure>
+<p>即可自动将软件包更新到最新的版本。</p>
+<blockquote>
+<p>apt为Ubuntu中的软件包管理器，可从上述修改的软件源中获取软件包，并自动安装。与之对应的，由已经在本地的<code>dpkg</code>文件直接安装的包管理器为dpkg。</p>
+<p><code>apt update</code>指更新软件源列表，可以检查本地的软件是否有更新；<code>apt upgrade</code>指更新软件，将<code>apt update</code>获取的可更新列表付诸实践，进行软件的更新。</p>
+<p>推荐先进行<code>apt update</code>，再进行<code>apt upgrade</code>。</p>
+<p>在<code>apt update</code>的终端输出中，观察到所有的下载地址均为“/mirrors.ustc.edu.cn/”，也可以证明上述修改软件源的操作是正确的。</p>
+</blockquote>
+<h3 id="修改语言"><a href="#修改语言" class="headerlink" title="修改语言"></a>修改语言</h3><p>settings &gt;&gt; region &amp; language &gt;&gt; manange installed language &gt;&gt; install/remove languages即可。</p>
+<p>也可通过终端更改，见<a href="https://blog.csdn.net/BobYuan888/article/details/88662779">Ubuntu修改终端下的语言（中文或英文）</a></p>
+<blockquote>
+<p>除了更改语言与使用浏览器等需要桌面GUI的操作，其他情况下均推荐使用终端控制。</p>
+</blockquote>
+<p>现在Ubuntu语言就已经更换为中文了。</p>
+<h3 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h3><p>终端运行如下命令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install vim build-essential python3-pip git xxd wget curl net-tools</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>apt install</code>后跟多个参数可以同时安装多个软件包。</p>
+<p>以下依次概括常用软件的用途：</p>
+<p><code>vim</code>：终端文本编辑器。linux上编辑文件最常用的文本编辑器，所有终端编辑文件的操作基本均需使用。vim的使用方法此处不展开，可自行查询。</p>
+<p><code>build-essential</code>：c/c++编译器。包括gcc、g++、make等。</p>
+<p><code>python3-pip</code>：python的包管理器。安装python库大都需要该程序。（因为有<code>conda</code>）</p>
+<p><code>git</code>：版本控制系统。可以进行文本文件的版本控制。git的使用方法此处不展开，可自行查询。</p>
+<p><code>xxd</code>：16进制转换器。可将文件以16进制形式存储。</p>
+<p><code>wget</code>/<code>curl</code>：网络下载器。可从指定的链接下载网络上的文件。同时二者还有测试网络连接等等功能。</p>
+<p><code>net-tools</code>：网络工具箱。包括了<code>ifconfig</code>等命令，可用于检测网络状况。</p>
+</blockquote>
+<h3 id="ssh与远程"><a href="#ssh与远程" class="headerlink" title="ssh与远程"></a>ssh与远程</h3><p>ssh是Secure SHell的缩写。通过ssh可以实现远程访问终端，则以后需要打开终端时就不需要在虚拟机上打开了。如果不需要Ubuntu的桌面，则完全可以只使用ssh控制，将虚拟机放在后台。</p>
+<p>打开终端，输入以下命令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install openssh-server openssh-client</span><br></pre></td></tr></table></figure>
+<p>此时虚拟机上就已经有ssh软件包了。</p>
+<blockquote>
+<p>openssh-server允许本机作为宿主机，其他机器连接到本机上；</p>
+<p>openssh-client允许本机连接其他机器。</p>
+</blockquote>
+<h4 id="账号密码连接"><a href="#账号密码连接" class="headerlink" title="账号密码连接"></a>账号密码连接</h4><p>在虚拟机的终端输入<code>ifconfig</code>命令，找到<strong>ens33</strong>内<strong>inet</strong>后的ipv4地址，即为主机连接虚拟机的地址。</p>
+<p>在主机远程软件（例如xshell、terminus等）上输入该地址，并输入账号密码，即可远程登录该主机。</p>
+<p>从此以后，涉及到的所有终端操作均可通过远程连接。</p>
+<h4 id="密钥连接"><a href="#密钥连接" class="headerlink" title="密钥连接"></a>密钥连接</h4><p>远程密钥连接需要在本地生成私钥与公钥，将公钥发给外部机器，外部机器即可访问本机。</p>
+<p>终端输入以下命令，并连打三次回车以生成密钥：（引号内为邮箱地址）</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxx@yyy.com&quot;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>连打三次回车的目的：</p>
+<ul>
+<li>第一次为输入密钥存放的地址，此处直接选择默认地址即可；</li>
+<li>第二次与第三次为输入与验证passphrase，无需要则可以直接回车略过。</li>
+</ul>
+</blockquote>
+<p>此时密钥已经生成在<strong>/home/usrname/.ssh</strong>文件夹内了。</p>
+<p>通过sftp连接主机（可使用账号密码连接），将<strong>/home/usrname/.ssh/id_rsa</strong>文件复制到宿主机上，并通过该私钥连接虚拟机即可。</p>
+<h4 id="git-ssh配置"><a href="#git-ssh配置" class="headerlink" title="git ssh配置"></a>git ssh配置</h4><p>git可以通过上述生成的密钥进行ssh连接，保护了pull、clone、push等操作的安全性。此处不做详解，可在网络上找到教程。</p>
+<h3 id="桌面环境配置"><a href="#桌面环境配置" class="headerlink" title="桌面环境配置"></a>桌面环境配置</h3><p>Ubuntu默认的桌面为gnome桌面，修改桌面的外观需要与gnome有关的插件。</p>
+<p>终端运行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install gnome-tweak chrome-gnome-shell gnome-shell-extensions gnome-extensions-app</span><br></pre></td></tr></table></figure>
+<p>即可获取与修改gnome桌面有关的依赖软件。</p>
+<p>重启机器，使更改生效；在应用程序列表中将找到tweak（优化）与extensions（扩展）。</p>
+<p>在优化中：</p>
+<ul>
+<li>“字体”下的“缩放比例”可以更改桌面的缩放大小；</li>
+<li>“键盘与鼠标”下的“其他布局选项”可以修改键盘映射；个人常将<kbd>Esc</kbd>与<kbd>Caps Lock</kbd>互换以便于vim的编辑，则在“Caps Lock 行为”中找到“Swap Esc and Caps Lock”并选中即可。</li>
+</ul>
+<h3 id="（可选）zsh、oh-my-zsh、p10k及相关插件的安装"><a href="#（可选）zsh、oh-my-zsh、p10k及相关插件的安装" class="headerlink" title="（可选）zsh、oh-my-zsh、p10k及相关插件的安装"></a>（可选）zsh、oh-my-zsh、p10k及相关插件的安装</h3><p>zsh是linux系统中除bash外的另一种shell，功能比bash强大，可添加插件等，对于终端的操作有很大帮助。</p>
+<p>oh-my-zsh和powerlevel10k均为zsh的插件，可以美化zsh。</p>
+<p><strong>以下软件的安装均为可选项，主要目的在于美化与增强终端功能，使用bash也不会造成过大的影响。</strong></p>
+<h4 id="相关字体的安装"><a href="#相关字体的安装" class="headerlink" title="相关字体的安装"></a>相关字体的安装</h4><p>为了正常显示p10k中的字体，首先进行相关字体的安装。</p>
+<p>前往<a href="https://github.com/romkatv/powerlevel10k#fonts">Fonts</a>页面，下载其中的<strong>MesloLGS NF *</strong>字体，并安装。此处在桌面操作较方便。</p>
+<p>终端输入以下命令，以检验安装是否成功。</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fc-list | grep MesloLGS</span><br></pre></td></tr></table></figure>
+<p>如果在列表中能看到各MesloLGS NF字体，则安装成功。</p>
+<blockquote>
+<p><code>fc-list</code>用于显示所有安装的字体。</p>
+<p>由于字体过多，列表将会很长，不利于查找是否有所需的字体。于是使用<code>grep</code>命令，在给定的文本中寻找MesloLGS字体。</p>
+<p><code>|</code>是管道 (pipe)，用于将前一指令的输出重定向为后一指令的输入。</p>
+</blockquote>
+<p>注意应在终端（远程、本地）的配置中修改显示字体为MesloLGS。</p>
+<h4 id="zsh安装"><a href="#zsh安装" class="headerlink" title="zsh安装"></a>zsh安装</h4><p>终端输入<code>sudo apt install zsh</code>即可。</p>
+<p>zsh的配置文件在<code>~/.zshrc</code>中，可以进行主题更换、插件安装等操作。具体在以下步骤中说明。</p>
+<h4 id="oh-my-zsh安装"><a href="#oh-my-zsh安装" class="headerlink" title="oh-my-zsh安装"></a>oh-my-zsh安装</h4><p>终端输入以下指令：</p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>或者使用<code>wget</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>即可安装oh-my-zsh。过程中会询问是否将默认终端转换为zsh，此处输入y选择是。</p>
+<blockquote>
+<p>此处可以看出<code>wget</code>与<code>curl</code>有相似之处。</p>
+</blockquote>
+<p>安装完成后发现shell的提示符变为箭头→，说明默认终端已经更改为了zsh。</p>
+<h4 id="oh-my-zsh主题更换"><a href="#oh-my-zsh主题更换" class="headerlink" title="oh-my-zsh主题更换"></a>oh-my-zsh主题更换</h4><p>oh-my-zsh已经有很多的主题，在<code>.zshrc</code>中选用合适的主题即可。</p>
+<p>例如想要更换为agnoster主题，则只需在<code>.zshrc</code>中修改<code>ZSH_THEME=&quot;agnoster&quot;</code>，再执行<code>source ~/.zshrc</code>重新加载<code>.zshrc</code>即可看到更改后的主题。</p>
+<h4 id="powerlevel10k安装"><a href="#powerlevel10k安装" class="headerlink" title="powerlevel10k安装"></a>powerlevel10k安装</h4><p>终端输入以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git <span class="variable">$&#123;ZSH_CUSTOM:-<span class="variable">$HOME</span>/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+<p>即可安装powerlevel10k。</p>
+<p>在<code>.zshrc</code>中修改<code>ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</code>，再执行<code>source ~/.zshrc</code>重新加载<code>.zshrc</code>即可进入powerlevel10k的配置界面。按照提示操作即可配置p10k的界面设置。</p>
+<p>若要重新配置p10k，则在终端输入<code>p10k configure</code>即可重新回到配置界面。</p>
+<h4 id="zsh插件安装"><a href="#zsh插件安装" class="headerlink" title="zsh插件安装"></a>zsh插件安装</h4><h5 id="zsh-syntax-highlighting"><a href="#zsh-syntax-highlighting" class="headerlink" title="zsh-syntax-highlighting"></a>zsh-syntax-highlighting</h5><p>这个插件可以帮助检查语法。输入正确的语法会显示绿色，错误的会显示红色。</p>
+<p>终端输入以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+<p>修改<code>.zshrc</code>中<code>plugins=(git zsh-syntax-highlighting)</code>，再执行<code>source ~/.zshrc</code>重新加载<code>.zshrc</code>即可。</p>
+<h5 id="其他插件"><a href="#其他插件" class="headerlink" title="其他插件"></a>其他插件</h5><p>另有zsh-autosuggestions插件，可用于自动补全之前输入过的命令。安装方法与上述插件类似。地址如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>Ubuntu的配置基本到此就结束了。目前已经可以使用Ubuntu进行基本的开发工作了。</p>
+<p>Linux内容博大精深，上述安装只是一个了解Linux的入口。深入了解Linux需要大量的实践与试错。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>建站注意事项</title>
+    <url>/Hexo/site-constuction-info/</url>
+    <content><![CDATA[<h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>建立这个网站的初衷是为了记录自己大学生活中的一些想法、踩过的一些坑，并可以做一个树洞抒发一下情感。在这里记录一下建立这个网站的注意事项与一些资源路径。</p>
+<p>该文章整体框架基于以下博客：</p>
+<ul>
+<li>15wylu <a href="https://blog.csdn.net/qq_32767041/category_8927471.html">Hexo NexT</a></li>
+</ul>
+<p>主要步骤均在上述博客中，以下只记录一些注意事项与想法。</p>
+<span id="more"></span>
+<h2 id="1-安装node-js-Hexo-NexT"><a href="#1-安装node-js-Hexo-NexT" class="headerlink" title="1. 安装node.js Hexo NexT"></a>1. 安装node.js Hexo NexT</h2><ul>
+<li>windows下直接到官网下载<a href="https://nodejs.org/zh-cn/">node.js</a>与<a href="https://git-scm.com/">git</a>即可。</li>
+<li>npm一定要改源(taobao)。</li>
+<li><code>git clone</code>时不时抽风，clone不下来。不妨试试ladder。但ladder有时候也不好使。这时候就需要给电脑烧三根香，碰碰运气。运气好了就能clone也能push；运气不好clone一个小时也不行，push一晚也push不上去。</li>
+</ul>
+<h2 id="2-Hexo"><a href="#2-Hexo" class="headerlink" title="2. Hexo"></a>2. Hexo</h2><ul>
+<li><p><code>hexo init</code>操作必须在空文件夹中进行。里面有无关文件也不行。</p>
+</li>
+<li><p>node_modules是真的nt。搞一个小网站需要这么多插件吗？</p>
+</li>
+<li><p>可以修改scaffolds文件夹中的模板。</p>
+<p>例如建站中不想要tags但是想要categories，那模板中就可以增加categories，删去tags。</p>
+</li>
+<li><p>source文件夹中只有<strong>_post</strong>是文章文件夹。所有在首页出现的博客文章均位于_post中。不在_post中的文件夹以及其中的文件将不会在主页中显示，只能通过特定链接访问，因此可以放一些隐藏文件。此外about、categories、tags等捷径也在单独的文件夹中。</p>
+</li>
+<li><p><code>hexo new [] &quot;&quot;</code>有点烦人。想要新建文章，直接在文件夹里面新建还不行，需要单独开命令行，建完了再开typora。不知道有没有解决办法。</p>
+</li>
+<li><p>categories的标签方法为yaml语法。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> [<span class="string">Study</span>, <span class="string">math</span>]</span><br><span class="line"><span class="comment"># - [new category]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>hexo deploy --debug</code>中注意debug前面是两个横线。</p>
+</li>
+<li><p>插入图片：使用hexo-asset-image插件。可参考<a href="https://blog.csdn.net/m0_43401436/article/details/107191688">hexo博客中插入图片失败——解决思路及个人最终解决办法</a></p>
+</li>
+<li><p>部署至Github、源代码上传至Github是两个事。部署是把自己生成的静态文件（如index.html、css配置文件、js脚本）上传到Github上；源代码上传就是源代码（source文件夹以及md文件、themes文件夹、config.yml等）上传。</p>
+</li>
+<li><p>数学公式：使用mathjax配置。参考：<a href="https://blog.csdn.net/u014630987/article/details/78670258">如何在 hexo 中支持 Mathjax？</a></p>
+<p>基本步骤：</p>
+<ol>
+<li>修改渲染引擎至kramed（kram &lt;- mark倒序）</li>
+<li>mathjax cdn刷新</li>
+<li>更改转义规则</li>
+<li>config.yaml开启mathjax</li>
+</ol>
+</li>
+<li><p>ftpsync至home.ustc.edu.cn失败，卡在commiting处mkdirs后。解决办法：<a href="https://es2q.com/blog/2019/05/12/Hexo-ftpsync-bug/">Hexo ftpsync错误分析</a></p>
+</li>
+</ul>
+<h2 id="3-NexT"><a href="#3-NexT" class="headerlink" title="3. NexT"></a>3. NexT</h2><ul>
+<li>鼠标点击特效：参考<a href="https://jrbcode.gitee.io/posts/80095cae.html">在Hexo+NexT博客中设置鼠标点击特效</a></li>
+<li>文章折叠：使用了<code>&lt;!-- more --&gt;</code>标志。有插件可以完成此工作，但是我并未使用。</li>
+</ul>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>以上基本是重点注意事项了。建这个站，还是希望自己能多写写东西，多多记录一下生活。愿我能达到吧。</p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+  </entry>
+</search>

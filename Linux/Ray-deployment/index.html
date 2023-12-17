@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rj-gu.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文档为OSH-2023 My-Glow小组的Lab4文档。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ray部署与测试文档">
+<meta property="og:url" content="https://rj-gu.github.io/Linux/Ray-deployment/index.html">
+<meta property="og:site_name" content="Rongjian Gu&#39;s Homepage">
+<meta property="og:description" content="本文档为OSH-2023 My-Glow小组的Lab4文档。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230606154156212.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230606154333125.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230606160319466.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230606172913907.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607170647250.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607080229143.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607165726373.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607165619816.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607171423096.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607171912591.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607171116498.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230607171158315.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230608224918948.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230608225313887.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230608225137644.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230608225154986.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230608225254043.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230609104415409.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230609104628643.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230609104738643.png">
+<meta property="og:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230609105008578.png">
+<meta property="article:published_time" content="2023-06-10T09:56:20.000Z">
+<meta property="article:modified_time" content="2023-06-10T10:01:23.546Z">
+<meta property="article:author" content="RJ-Gu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rj-gu.github.io/Linux/Ray-deployment/image-20230606154156212.png">
+
+<link rel="canonical" href="https://rj-gu.github.io/Linux/Ray-deployment/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  
+  
+    <script src="/js/cursor/love.min.js"></script>
+  
+
+
+  <title>Ray部署与测试文档 | Rongjian Gu's Homepage</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rongjian Gu's Homepage</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Simple thoughts; Simple works.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/RJ-Gu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rj-gu.github.io/Linux/Ray-deployment/">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="RJ-Gu">
+      <meta itemprop="description" content="A subtle homepage of an ordinary student in USTC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rongjian Gu's Homepage">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ray部署与测试文档
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-06-10 17:56:20 / Modified: 18:01:23" itemprop="dateCreated datePublished" datetime="2023-06-10T17:56:20+08:00">2023-06-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文档为OSH-2023 My-Glow小组的Lab4文档。<br><span id="more"></span></p>
+<h1 id="Ray-部署文档"><a href="#Ray-部署文档" class="headerlink" title="Ray 部署文档"></a>Ray 部署文档</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>Ubuntu版本：22.04.2</li>
+<li>python版本：3.10.10</li>
+<li>pip版本：23.0.1</li>
+</ul>
+<h2 id="单机版Ray部署"><a href="#单机版Ray部署" class="headerlink" title="单机版Ray部署"></a>单机版Ray部署</h2><h3 id="安装Ray"><a href="#安装Ray" class="headerlink" title="安装Ray"></a>安装Ray</h3><p>Ray的安装基于pip。运行以下命令安装Ray：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo pip3 install -U <span class="string">&quot;ray[default]&quot;</span></span><br></pre></td></tr></table></figure>
+<p>自动安装了ray2.3.1版本。</p>
+<blockquote>
+<p>根据官方文档，运行<code>sudo pip3 install -U ray</code>也可；与安装<code>ray[default]</code>的区别在于<code>ray[default]</code>会多安装一些依赖。</p>
+</blockquote>
+<h3 id="Ray-cluster部署"><a href="#Ray-cluster部署" class="headerlink" title="Ray cluster部署"></a>Ray cluster部署</h3><p>Ray集群的部署要求集群内的机器在同一局域网下，并且python和Ray版本相同。</p>
+<ul>
+<li><p>在主节点上：运行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ray start --<span class="built_in">head</span> --port=6379</span><br></pre></td></tr></table></figure>
+<p>得到如下输出，则Ray启动成功：</p>
+<p><img src="/Linux/Ray-deployment/image-20230606154156212.png" alt="image-20230606154156212"></p>
+</li>
+<li><p>在子结点上：运行如下命令：（该命令即为主节点上运行时输出的命令）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ray start --address=<span class="string">&#x27;198.18.0.1:6379&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>得到如下输出，则Ray子结点已连接到主节点上：</p>
+<p><img src="/Linux/Ray-deployment/image-20230606154333125.png" alt="image-20230606154333125"></p>
+</li>
+<li><p>要结束ray，只需在主节点上运行<code>ray stop</code>即可。</p>
+</li>
+</ul>
+<h3 id="Ray监控"><a href="#Ray监控" class="headerlink" title="Ray监控"></a>Ray监控</h3><p>在主节点上登陆<code>localhost:8265</code>即可看到所有节点的监控信息。</p>
+<p><img src="/Linux/Ray-deployment/image-20230606160319466.png" alt="image-20230606160319466"></p>
+<p>这里使用了旧ui。</p>
+<h2 id="docker部署Ray"><a href="#docker部署Ray" class="headerlink" title="docker部署Ray"></a>docker部署Ray</h2><p>首先docker的安装见<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/ubuntu/">官方文档</a>，换源见<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/dockerhub.html">中科大docker镜像</a></p>
+<p>Dockerfile如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . /</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo sed -i <span class="string">&#x27;s/cn.archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo sed -i <span class="string">&#x27;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo sed -i <span class="string">&#x27;s/security.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo apt update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo apt install -y python3 &amp;&amp; sudo apt install -y python3-pip</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip3 config ser global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip3 install -U <span class="string">&quot;ray[default]&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>使用该镜像来创建ray镜像。步骤如下：</p>
+<ol>
+<li><p>在目录下创建Dockerfile，并将测试的python文件复制到同一文件夹下，如下图：</p>
+<p><img src="/Linux/Ray-deployment/image-20230606172913907.png" alt="image-20230606172913907"></p>
+</li>
+<li><p>构建docker镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t ray_cluster .</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-t参数的目的是将打包的镜像文件命名。</p>
+</blockquote>
+</li>
+<li><p>运行docker镜像：</p>
+<p>头结点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -idt --name ray_head ray_cluster</span><br></pre></td></tr></table></figure>
+<p>子结点：（此处子结点开启了两个，可按需求开启）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -idt --name ray_node1 ray_cluster</span><br><span class="line">docker run -idt --name ray_node2 ray_cluster</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-d参数的目的是后台执行容器；-it使得容器不会自动退出，并能够通过终端访问。</p>
+</blockquote>
+</li>
+<li><p>进入容器，并开启/连接Ray服务</p>
+<p>对于头结点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it ray_head bin/bash</span><br><span class="line"><span class="comment"># 以下为容器内部操作</span></span><br><span class="line">ray start --<span class="built_in">head</span> --port=6379</span><br></pre></td></tr></table></figure>
+<p>可以得到与单机版部署类似的输出。</p>
+<p>对于子结点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it ray_node1 bin/bash</span><br><span class="line"><span class="comment"># 以下为容器内部操作</span></span><br><span class="line"><span class="comment"># address为头结点输出的地址</span></span><br><span class="line">ray start --address=<span class="string">&#x27;172.17.0.2:6379&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在头结点内运行测试文件即可开始测试。</p>
+</li>
+</ol>
+<h1 id="Ray性能测试与优化"><a href="#Ray性能测试与优化" class="headerlink" title="Ray性能测试与优化"></a>Ray性能测试与优化</h1><h2 id="测试任务"><a href="#测试任务" class="headerlink" title="测试任务"></a>测试任务</h2><p>我们组选用的测试任务是计算一定范围内（暴力计算）质数的个数。</p>
+<blockquote>
+<p>选用该任务的原因是该任务计算量大，能够体现出分布式计算的优点；同时暴力计算便于并行化，程序编写简单，且运行时间适中，避免偶然因素影响实验结果。</p>
+</blockquote>
+<p>暴力计算素数个数的核心代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">n: <span class="built_in">int</span></span>):</span><br><span class="line">    result = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(n ** <span class="number">0.5</span>) + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> n % k == <span class="number">0</span>:</span><br><span class="line">            result = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">count_primes</span>(<span class="params">n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n):</span><br><span class="line">        <span class="keyword">if</span> is_prime(k):</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line"></span><br><span class="line">count_primes(<span class="number">10000000</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Ray性能指标"><a href="#Ray性能指标" class="headerlink" title="Ray性能指标"></a>Ray性能指标</h2><p>性能指标如下：</p>
+<ul>
+<li><p>CPU占用率：指计算任务在CPU上的负载。</p>
+<p>CPU占用率代表了任务在不同节点内对CPU的压力。</p>
+</li>
+<li><p>总执行时间：指同一程序从开始执行到执行完毕的时间。</p>
+<p>总执行时间代表了一项任务分配在不同节点后的性能表现。</p>
+</li>
+<li><p>平均响应时间：指系统对请求做出响应的平均时间</p>
+<p>平均响应时间代表了一个系统对大量请求的处理能力；在Ray系统内可指代从程序开始执行到Ray开始真正计算的间隔。</p>
+</li>
+<li><p>吞吐量：指系统在单位时间内处理请求的数量。</p>
+<p>吞吐量代表了一个系统单位时间内能够处理请求的数量。</p>
+</li>
+<li><p>响应时间方差：指将所有节点的响应时间排成数列，该数列的方差。</p>
+<p>响应时间方差从另一方面代表了一个系统对大量请求的处理能力；如果方差过大，则代表该系统分配任务存在不均衡的情况，该系统的性能大概率会比较低。</p>
+</li>
+</ul>
+<p>在本实验中，我们将监测CPU占用率和总执行时间两个指标；原因是这两个指标易于测量：CPU占用率可以从Ray控制台上直接得到；总执行时间可以在程序中计时得到。</p>
+<blockquote>
+<p>程序计时测量执行时间可能存在系统误差，但拉长执行时间后该系统误差会被稀释，对整体的影响较小，因此可以使用。</p>
+</blockquote>
+<h2 id="不使用Ray进行测试"><a href="#不使用Ray进行测试" class="headerlink" title="不使用Ray进行测试"></a>不使用Ray进行测试</h2><p>CPU使用率测试结果如下：（使用top监测）</p>
+<p><img src="/Linux/Ray-deployment/image-20230607170647250.png" alt="image-20230607170647250"></p>
+<p>总执行时间时间测试结果如下：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607080229143.png" alt="image-20230607080229143" style="zoom:67%;"></p>
+<p>上述结果汇总为表格如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运行平台</th>
+<th style="text-align:center">CPU占用率</th>
+<th style="text-align:center">执行时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">不使用Ray</td>
+<td style="text-align:center">98%+（单核）</td>
+<td style="text-align:center">62.56s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>该结果将作为使用Ray测试时的性能基准。</p>
+<h2 id="Ray单机性能测试"><a href="#Ray单机性能测试" class="headerlink" title="Ray单机性能测试"></a>Ray单机性能测试</h2><h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Ray.remote</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Compute</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        result = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(n ** <span class="number">0.5</span>) + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> n % k == <span class="number">0</span>:</span><br><span class="line">                result = <span class="literal">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">count_primes</span>(<span class="params">self, start: <span class="built_in">int</span>, end: <span class="built_in">int</span>, step: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(start, end, step):</span><br><span class="line">            <span class="keyword">if</span> Compute.is_prime(k):</span><br><span class="line">                self.count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> self.count</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">result</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.count</span><br><span class="line">   </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    Ray.init()</span><br><span class="line">    init_time = time.time()</span><br><span class="line">    computer = Compute.remote()</span><br><span class="line">    futures = []</span><br><span class="line">    future = computer.count_primes.remote(<span class="number">2</span>, <span class="number">10000000</span>, <span class="number">1</span>)</span><br><span class="line">    futures.append(future)</span><br><span class="line">    result = Ray.get(futures)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;total time: &quot;</span>, time.time()-init_time)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在一台虚拟机上运行一个头结点和两个子结点，作为Ray集群。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>运行计算质数个数的代码，得到如下结果：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607165726373.png" alt="image-20230607165726373"></p>
+<p>运行过程中Ray的控制台如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607165619816.png" alt="image-20230607165619816"></p>
+<p>观测top内CPU的使用率如下：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171423096.png" alt="image-20230607171423096"></p>
+<p>top内显示Ray计算只用了一个进程，显然没有对多核计算进行优化。</p>
+<p>总结出单机运行Ray的性能指标如下表所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运行平台</th>
+<th style="text-align:center">CPU占用率</th>
+<th style="text-align:center">执行时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">不使用Ray</td>
+<td style="text-align:center">98%+（单核）</td>
+<td style="text-align:center">62.56s</td>
+</tr>
+<tr>
+<td style="text-align:center">使用Ray</td>
+<td style="text-align:center">&lt;20%（所有核）~100%（单核）</td>
+<td style="text-align:center">64.32s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>可以看到，程序部署在Ray后，运行时间相比未部署的时间反而长了2s（应为Ray分配任务的开销），且CPU的利用率仅不到20%，说明上述代码并没有利用到Ray分布式集群强大的运算能力，应该进行优化。</p>
+<h2 id="Ray单机优化性能测试"><a href="#Ray单机优化性能测试" class="headerlink" title="Ray单机优化性能测试"></a>Ray单机优化性能测试</h2><p>针对上述代码无法利用到Ray性能的问题，考虑将测试代码进行优化。</p>
+<p>最初的测试代码只是将任务整体交给Ray，因此用不到Ray的并行计算。因此，在计算任务中，将所有任务手动拆分为小块，并分配给Ray，性能预期将会提升。</p>
+<p>修改main函数如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    Ray.init()</span><br><span class="line">    init_time = time.time()</span><br><span class="line">    <span class="comment"># step: 指分组数，每一组内检查的数差值为step</span></span><br><span class="line">    step = <span class="number">10</span></span><br><span class="line">    futures = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(step):</span><br><span class="line">        computer = Compute.remote()</span><br><span class="line">        future = computer.count_primes.remote(i, <span class="number">10000000</span>, step)</span><br><span class="line">        futures.append(future)</span><br><span class="line">    results = Ray.get(futures)</span><br><span class="line">    <span class="comment"># 因为计算时把0和1也算入质数，因此在这里减去</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(results) - <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;total time: &quot;</span>, time.time()-init_time)</span><br></pre></td></tr></table></figure>
+<p>代码将待测试的所有数分为10组，并调用多个<code>remote()</code>方法生成多个计算实例并同时计算，从而达到更高的计算性能。</p>
+<p>测试结果如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171912591.png" alt="image-20230607171912591"></p>
+<p>运行过程中Ray的控制台如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171116498.png" alt="image-20230607171116498"></p>
+<blockquote>
+<p>图中显示第二个节点CPU使用率显著低于其他两个节点，可能原因是其正处于被分配过程中，因此可视为误差。</p>
+</blockquote>
+<p>观测top内CPU的使用率如下：</p>
+<p><img src="/Linux/Ray-deployment/image-20230607171158315.png" alt="image-20230607171158315"></p>
+<p>可见Ray自动开启了多个compute进程，提高了运算速度。</p>
+<p>由上述所有总结出单机运行Ray的性能指标如下表所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运行平台</th>
+<th style="text-align:center">CPU占用率</th>
+<th style="text-align:center">执行时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">不使用Ray</td>
+<td style="text-align:center">98%+（单进程）</td>
+<td style="text-align:center">62.56s</td>
+</tr>
+<tr>
+<td style="text-align:center">使用Ray</td>
+<td style="text-align:center">&lt;20%（对任一节点）~100%（单进程）</td>
+<td style="text-align:center">64.32s</td>
+</tr>
+<tr>
+<td style="text-align:center">使用Ray（代码已优化）</td>
+<td style="text-align:center">99%+（对任一节点） ~100%（多进程）</td>
+<td style="text-align:center">20.82s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>优化过后代码的性能提升约为<strong>3倍</strong>，说明利用到并行的代码得到了质的性能提升。</p>
+<h2 id="Ray分布式性能测试"><a href="#Ray分布式性能测试" class="headerlink" title="Ray分布式性能测试"></a>Ray分布式性能测试</h2><p>分布式测试在两台虚拟机上进行。在一台虚拟机上运行Ray的头节点，在另一台虚拟机上运行子结点，从而构成Ray集群。</p>
+<p>Ray的控制台如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608224918948.png" alt="image-20230608224918948"></p>
+<p>两节点的IP地址不同可以证明Ray集群是在两台机器上搭建的。</p>
+<p>在头结点运行测试程序，得到如下结果：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608225313887.png" alt="image-20230608225313887"></p>
+<p>观察到两台虚拟机的CPU使用率如下，即CPU负荷均达到最大：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608225137644.png" alt="image-20230608225137644"></p>
+<p><img src="/Linux/Ray-deployment/image-20230608225154986.png" alt="image-20230608225154986"></p>
+<p>Ray的控制台输出如下所示：</p>
+<p><img src="/Linux/Ray-deployment/image-20230608225254043.png" alt="image-20230608225254043"></p>
+<p>由上述测试结果可以得到Ray已经在多机上完成了分布式部署。</p>
+<h2 id="Docker部署性能测试"><a href="#Docker部署性能测试" class="headerlink" title="Docker部署性能测试"></a>Docker部署性能测试</h2><p>Docker的部署过程见部署文档。在完成部署文档的内容后，机器中应该已经有Docker的镜像了。</p>
+<p>在终端1上运行docker镜像，并在内部的终端中运行<code>ray start --head --port=6379</code>，得到如下输出：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609104415409.png" alt="image-20230609104415409"></p>
+<p>类似的，在终端2的docker内运行<code>ray start --address=&#39;172.17.0.2:6379&#39;</code>，有以下输出：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609104628643.png" alt="image-20230609104628643"></p>
+<p>由于docker内无法通过浏览器显示ray控制台，因此在头结点内使用<code>ray status</code>查看集群的状态：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609104738643.png" alt="image-20230609104738643" style="zoom:50%;"></p>
+<p>可见在docker搭建的ray集群内有两个节点，即两台终端分别对应的节点。</p>
+<p>在头结点内运行测试文件，得到如下输出：</p>
+<p><img src="/Linux/Ray-deployment/image-20230609105008578.png" alt="image-20230609105008578"></p>
+<p>这个结果与单机上部署多个ray节点测试结果类似，说明在docker上部署是成功的。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div style="text-align:center;color: #ccc;font-size:14px;">------------- Thanks for watching <i class="fa fa-heart"></i> -------------</div>
+
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Essay-analysis/recommendation-system-survey/" rel="prev" title="推荐系统综述 文章分析">
+      <i class="fa fa-chevron-left"></i> 推荐系统综述 文章分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Windows/windows-conda-pytorch-installation/" rel="next" title="Windows安装miniconda和pytorch环境">
+      Windows安装miniconda和pytorch环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ray-%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3"><span class="nav-text">Ray 部署文档</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%9C%BA%E7%89%88Ray%E9%83%A8%E7%BD%B2"><span class="nav-text">单机版Ray部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Ray"><span class="nav-text">安装Ray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ray-cluster%E9%83%A8%E7%BD%B2"><span class="nav-text">Ray cluster部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ray%E7%9B%91%E6%8E%A7"><span class="nav-text">Ray监控</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker%E9%83%A8%E7%BD%B2Ray"><span class="nav-text">docker部署Ray</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ray%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-text">Ray性能测试与优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%BB%E5%8A%A1"><span class="nav-text">测试任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ray%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-text">Ray性能指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8Ray%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-text">不使用Ray进行测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ray%E5%8D%95%E6%9C%BA%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-text">Ray单机性能测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="nav-text">核心代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ray%E5%8D%95%E6%9C%BA%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-text">Ray单机优化性能测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ray%E5%88%86%E5%B8%83%E5%BC%8F%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-text">Ray分布式性能测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E9%83%A8%E7%BD%B2%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-text">Docker部署性能测试</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="RJ-Gu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">RJ-Gu</p>
+  <div class="site-description" itemprop="description">A subtle homepage of an ordinary student in USTC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RJ-Gu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RJ-Gu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gurongjian@mail.ustc.edu.cn" title="E-Mail → mailto:gurongjian@mail.ustc.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">RJ-Gu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
