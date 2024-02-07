@@ -50,62 +50,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Windows安装miniconda和pytorch环境</title>
-    <url>/Windows/windows-conda-pytorch-installation/</url>
-    <content><![CDATA[<p>此处记录windows环境下miniconda以及pytorch环境的建立过程以及需要注意的事项。</p>
-<span id="more"></span>
-<h2 id="conda环境安装与配置"><a href="#conda环境安装与配置" class="headerlink" title="conda环境安装与配置"></a>conda环境安装与配置</h2><blockquote>
-<p>选择miniconda是因为相较于anaconda，miniconda体积较小，删去了很多用不上的功能。</p>
-</blockquote>
-<p>下载地址：<a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a></p>
-<p>在windows环境下，选择windows平台下的64位安装包，即下图中的第一个选项。</p>
-<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710193210962.png" alt="image-20230710193210962"></p>
-<blockquote>
-<p>linux环境下则要按照指令集选择对应的版本下载安装包。</p>
-</blockquote>
-<p>按照流程安装即可。</p>
-<blockquote>
-<p>按照默认设置将不会把conda加入环境变量中。如果想要手动加入环境变量，以下为环境变量列表：</p>
-<p>（<code>D:\miniconda3</code>是我的miniconda安装路径，加入环境变量时注意修改为自己的路径）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\miniconda3</span><br><span class="line">D:\miniconda3\Library\mingw-w64\bin</span><br><span class="line">D:\miniconda3\Library\usr\bin</span><br><span class="line">D:\miniconda3\Library\bin</span><br><span class="line">D:\miniconda3\Scripts</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="conda虚拟环境搭建"><a href="#conda虚拟环境搭建" class="headerlink" title="conda虚拟环境搭建"></a>conda虚拟环境搭建</h3><p>类似python的virtualenv，conda可以搭建虚拟环境以实现不同环境的隔离，从而允许不同版本的库在不同程序中正确运行。但conda虚拟环境与virtualenv不同的是，不同的虚拟环境中允许安装不同版本的python，更便于用户使用。</p>
-<p>在不同的环境中，命令行的地址前方会显示当前的虚拟环境名称，如下图所示：</p>
-<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710194554448.png" alt="image-20230710194554448"></p>
-<p>与虚拟环境相关的常用命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create -n <span class="string">&quot;虚拟环境的名称&quot;</span> python=3.x <span class="comment"># 新建虚拟环境</span></span><br><span class="line">conda <span class="built_in">env</span> list <span class="comment"># 查看虚拟环境列表</span></span><br><span class="line">conda activate <span class="string">&quot;虚拟环境的名称&quot;</span> <span class="comment"># 转到某个虚拟环境</span></span><br><span class="line">conda remove -n <span class="string">&quot;虚拟环境的名称&quot;</span> --all <span class="comment"># 删除某个虚拟环境以及内部的所有包</span></span><br></pre></td></tr></table></figure>
-<h3 id="conda第三方库配置"><a href="#conda第三方库配置" class="headerlink" title="conda第三方库配置"></a>conda第三方库配置</h3><p>在conda虚拟环境内部，安装第三方库除了通过pip安装，还可以通过conda安装。</p>
-<p>conda配置第三方库的命令如下：（注意要转到需要安装库的虚拟环境中）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 安装第三方库</span></span><br><span class="line">conda update --all <span class="comment"># 更新该虚拟环境下的所有第三方库</span></span><br><span class="line">conda update <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 更新某一个库</span></span><br><span class="line">conda uninstall <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 卸载某一个库</span></span><br></pre></td></tr></table></figure>
-<h3 id="conda换源"><a href="#conda换源" class="headerlink" title="conda换源"></a>conda换源</h3><p>此处使用清华源。</p>
-<p>先执行<code>conda config --set show_channel_urls yes</code>命令，在用户目录下生成.condarc文件，再往该文件中写入：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch-lts:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">deepmodeling:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/</span></span><br></pre></td></tr></table></figure>
-<p>即可将源换为清华源。</p>
-<h2 id="pytorch安装与配置"><a href="#pytorch安装与配置" class="headerlink" title="pytorch安装与配置"></a>pytorch安装与配置</h2><p>前往pytorch的官网<a href="https://pytorch.org/">https://pytorch.org/</a>，找到选择安装平台与版本的选项栏，选择对应的版本进行安装。</p>
-<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710205605502.png" alt="image-20230710205605502"></p>
-<p>选择使用conda环境安装，再选择cuda版本，即可得到对应的指令。运行指令即可安装完pytorch。</p>
-<blockquote>
-<p>低版本的pytorch可以在高版本的cuda上运行。但最好选择与cuda版本相适应的pytorch版本进行安装。</p>
-</blockquote>
-<p>安装完后，可以通过如下的指令检查gpu是否可用。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.cuda.is_available()</span><br><span class="line"><span class="literal">True</span>	<span class="comment"># True表示cuda可用</span></span><br></pre></td></tr></table></figure>
-<h2 id="jupyter-notebook安装与配置"><a href="#jupyter-notebook安装与配置" class="headerlink" title="jupyter notebook安装与配置"></a>jupyter notebook安装与配置</h2><p>通过以下指令来安装jupyter notebook。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install jupyter</span><br></pre></td></tr></table></figure>
-<p>安装完成后，可通过命令行输入<code>jupyter notebook</code>来启动jupyter notebook。</p>
-<blockquote>
-<p>取消jupyter notebook密码：</p>
-<ol>
-<li>输入<code>jupyter notebook --generate-config</code>，生成一个py文件；</li>
-<li>找到py文件中的<code>\#c.NotebookApp.token = &#39;&lt;generated&gt;&#39;</code>，改为<code>c.NotebookApp.token = &#39;&#39;</code>；</li>
-<li>重启jupyter notebook即可。</li>
-</ol>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Ray部署与测试文档</title>
     <url>/Linux/Ray-deployment/</url>
     <content><![CDATA[<p>本文档为OSH-2023 My-Glow小组的Lab4文档。<br><span id="more"></span></p>
@@ -682,6 +626,62 @@
 ]]></content>
       <categories>
         <category>Hexo</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Windows安装miniconda和pytorch环境</title>
+    <url>/Windows/windows-conda-pytorch-installation/</url>
+    <content><![CDATA[<p>此处记录windows环境下miniconda以及pytorch环境的建立过程以及需要注意的事项。</p>
+<span id="more"></span>
+<h2 id="conda环境安装与配置"><a href="#conda环境安装与配置" class="headerlink" title="conda环境安装与配置"></a>conda环境安装与配置</h2><blockquote>
+<p>选择miniconda是因为相较于anaconda，miniconda体积较小，删去了很多用不上的功能。</p>
+</blockquote>
+<p>下载地址：<a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a></p>
+<p>在windows环境下，选择windows平台下的64位安装包，即下图中的第一个选项。</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710193210962.png" alt="image-20230710193210962"></p>
+<blockquote>
+<p>linux环境下则要按照指令集选择对应的版本下载安装包。</p>
+</blockquote>
+<p>按照流程安装即可。</p>
+<blockquote>
+<p>按照默认设置将不会把conda加入环境变量中。如果想要手动加入环境变量，以下为环境变量列表：</p>
+<p>（<code>D:\miniconda3</code>是我的miniconda安装路径，加入环境变量时注意修改为自己的路径）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\miniconda3</span><br><span class="line">D:\miniconda3\Library\mingw-w64\bin</span><br><span class="line">D:\miniconda3\Library\usr\bin</span><br><span class="line">D:\miniconda3\Library\bin</span><br><span class="line">D:\miniconda3\Scripts</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="conda虚拟环境搭建"><a href="#conda虚拟环境搭建" class="headerlink" title="conda虚拟环境搭建"></a>conda虚拟环境搭建</h3><p>类似python的virtualenv，conda可以搭建虚拟环境以实现不同环境的隔离，从而允许不同版本的库在不同程序中正确运行。但conda虚拟环境与virtualenv不同的是，不同的虚拟环境中允许安装不同版本的python，更便于用户使用。</p>
+<p>在不同的环境中，命令行的地址前方会显示当前的虚拟环境名称，如下图所示：</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710194554448.png" alt="image-20230710194554448"></p>
+<p>与虚拟环境相关的常用命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create -n <span class="string">&quot;虚拟环境的名称&quot;</span> python=3.x <span class="comment"># 新建虚拟环境</span></span><br><span class="line">conda <span class="built_in">env</span> list <span class="comment"># 查看虚拟环境列表</span></span><br><span class="line">conda activate <span class="string">&quot;虚拟环境的名称&quot;</span> <span class="comment"># 转到某个虚拟环境</span></span><br><span class="line">conda remove -n <span class="string">&quot;虚拟环境的名称&quot;</span> --all <span class="comment"># 删除某个虚拟环境以及内部的所有包</span></span><br></pre></td></tr></table></figure>
+<h3 id="conda第三方库配置"><a href="#conda第三方库配置" class="headerlink" title="conda第三方库配置"></a>conda第三方库配置</h3><p>在conda虚拟环境内部，安装第三方库除了通过pip安装，还可以通过conda安装。</p>
+<p>conda配置第三方库的命令如下：（注意要转到需要安装库的虚拟环境中）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 安装第三方库</span></span><br><span class="line">conda update --all <span class="comment"># 更新该虚拟环境下的所有第三方库</span></span><br><span class="line">conda update <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 更新某一个库</span></span><br><span class="line">conda uninstall <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 卸载某一个库</span></span><br></pre></td></tr></table></figure>
+<h3 id="conda换源"><a href="#conda换源" class="headerlink" title="conda换源"></a>conda换源</h3><p>此处使用清华源。</p>
+<p>先执行<code>conda config --set show_channel_urls yes</code>命令，在用户目录下生成.condarc文件，再往该文件中写入：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch-lts:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">deepmodeling:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/</span></span><br></pre></td></tr></table></figure>
+<p>即可将源换为清华源。</p>
+<h2 id="pytorch安装与配置"><a href="#pytorch安装与配置" class="headerlink" title="pytorch安装与配置"></a>pytorch安装与配置</h2><p>前往pytorch的官网<a href="https://pytorch.org/">https://pytorch.org/</a>，找到选择安装平台与版本的选项栏，选择对应的版本进行安装。</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710205605502.png" alt="image-20230710205605502"></p>
+<p>选择使用conda环境安装，再选择cuda版本，即可得到对应的指令。运行指令即可安装完pytorch。</p>
+<blockquote>
+<p>低版本的pytorch可以在高版本的cuda上运行。但最好选择与cuda版本相适应的pytorch版本进行安装。</p>
+</blockquote>
+<p>安装完后，可以通过如下的指令检查gpu是否可用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.cuda.is_available()</span><br><span class="line"><span class="literal">True</span>	<span class="comment"># True表示cuda可用</span></span><br></pre></td></tr></table></figure>
+<h2 id="jupyter-notebook安装与配置"><a href="#jupyter-notebook安装与配置" class="headerlink" title="jupyter notebook安装与配置"></a>jupyter notebook安装与配置</h2><p>通过以下指令来安装jupyter notebook。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install jupyter</span><br></pre></td></tr></table></figure>
+<p>安装完成后，可通过命令行输入<code>jupyter notebook</code>来启动jupyter notebook。</p>
+<blockquote>
+<p>取消jupyter notebook密码：</p>
+<ol>
+<li>输入<code>jupyter notebook --generate-config</code>，生成一个py文件；</li>
+<li>找到py文件中的<code>\#c.NotebookApp.token = &#39;&lt;generated&gt;&#39;</code>，改为<code>c.NotebookApp.token = &#39;&#39;</code>；</li>
+<li>重启jupyter notebook即可。</li>
+</ol>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Windows</category>
       </categories>
   </entry>
 </search>
