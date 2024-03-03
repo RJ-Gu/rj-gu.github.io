@@ -22,21 +22,22 @@
     var CONFIG = {"hostname":"rj-gu.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="文章地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2306.05817.pdf 文章名：How Can Recommender Systems Benefit from Large Language Models: A Survey">
+  <meta name="description" content="因为AI Agents需要处理各种各样的情况，LLM就会作为Agents的一种重要的底层模型。在这个框架下，LLM需要得到多方面的提升才能在Agents中发挥作用。记忆就是其中重要的一部分，Agents需要特定的记忆机制来确保其能够正确的处理复杂的任务，应用之前的策略。此外，这样也能帮助Agents适应陌生的环境。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LLM对推荐系统的影响调研笔记">
-<meta property="og:url" content="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/index.html">
+<meta property="og:title" content="LLM与检索、记忆相关文章分析">
+<meta property="og:url" content="https://rj-gu.github.io/LLM-application/LLM-memory-survey/index.html">
 <meta property="og:site_name" content="Rongjian Gu&#39;s Homepage">
-<meta property="og:description" content="文章地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2306.05817.pdf 文章名：How Can Recommender Systems Benefit from Large Language Models: A Survey">
+<meta property="og:description" content="因为AI Agents需要处理各种各样的情况，LLM就会作为Agents的一种重要的底层模型。在这个框架下，LLM需要得到多方面的提升才能在Agents中发挥作用。记忆就是其中重要的一部分，Agents需要特定的记忆机制来确保其能够正确的处理复杂的任务，应用之前的策略。此外，这样也能帮助Agents适应陌生的环境。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/image-20230728000320090.png">
-<meta property="article:published_time" content="2023-07-27T16:15:18.000Z">
-<meta property="article:modified_time" content="2023-07-27T16:16:46.168Z">
+<meta property="og:image" content="https://rj-gu.github.io/LLM-application/LLM-memory-survey/image-20240218171820374.png">
+<meta property="og:image" content="https://rj-gu.github.io/LLM-application/LLM-memory-survey/image-20240225212201004.png">
+<meta property="article:published_time" content="2024-02-17T08:48:39.000Z">
+<meta property="article:modified_time" content="2024-03-03T10:12:36.005Z">
 <meta property="article:author" content="RJ-Gu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/image-20230728000320090.png">
+<meta name="twitter:image" content="https://rj-gu.github.io/LLM-application/LLM-memory-survey/image-20240218171820374.png">
 
-<link rel="canonical" href="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/">
+<link rel="canonical" href="https://rj-gu.github.io/LLM-application/LLM-memory-survey/">
 
 
 <script id="page-configurations">
@@ -55,7 +56,7 @@
   
 
 
-  <title>LLM对推荐系统的影响调研笔记 | Rongjian Gu's Homepage</title>
+  <title>LLM与检索、记忆相关文章分析 | Rongjian Gu's Homepage</title>
   
 
 
@@ -201,7 +202,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/">
+    <link itemprop="mainEntityOfPage" href="https://rj-gu.github.io/LLM-application/LLM-memory-survey/">
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="RJ-Gu">
@@ -213,7 +214,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LLM对推荐系统的影响调研笔记
+          LLM与检索、记忆相关文章分析
         </h1>
 
         <div class="post-meta">
@@ -223,17 +224,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-07-28 00:15:18 / Modified: 00:16:46" itemprop="dateCreated datePublished" datetime="2023-07-28T00:15:18+08:00">2023-07-28</time>
+              <time title="Created: 2024-02-17 16:48:39" itemprop="dateCreated datePublished" datetime="2024-02-17T16:48:39+08:00">2024-02-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-03 18:12:36" itemprop="dateModified" datetime="2024-03-03T18:12:36+08:00">2024-03-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Essay-analysis/" itemprop="url" rel="index"><span itemprop="name">Essay analysis</span></a>
+                  <a href="/categories/LLM-application/" itemprop="url" rel="index"><span itemprop="name">LLM-application</span></a>
                 </span>
             </span>
 
@@ -248,34 +255,89 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2306.05817.pdf">https://arxiv.org/pdf/2306.05817.pdf</a></p>
-<p>文章名：How Can Recommender Systems Benefit from Large Language Models: A Survey</p>
+        <p>因为AI Agents需要处理各种各样的情况，LLM就会作为Agents的一种重要的底层模型。在这个框架下，LLM需要得到多方面的提升才能在Agents中发挥作用。记忆就是其中重要的一部分，Agents需要特定的记忆机制来确保其能够正确的处理复杂的任务，应用之前的策略。此外，这样也能帮助Agents适应陌生的环境。</p>
 <span id="more"></span>
-<blockquote>
-<p>推荐系统的流水过程：</p>
+<p>LLM中实现记忆存在难点：</p>
+<ol>
+<li>LLM是以自然语言格式处理交互的；随着总记录的变多，输入数据可能会超过Transformer体系结构的限制，导致之前的数据出现丢失的情况。</li>
+<li>LLM很难提取之前获得的记忆。历史记录变多后，Agents的记忆压力增加，在相关的topic之间建立连接的难度变大。</li>
+</ol>
+<p>有如下帮助Agents增强记忆的方式：</p>
+<ol>
+<li>提升Transformer模型的长度限制：可以使用文本截断、分割输入、强调关键部分等方法；还可以修改注意力机制从而适应更长的序列。</li>
+<li>记忆总结：将记忆浓缩总结。</li>
+<li>使用向量或数据结构压缩记忆：可以使用embedding vector/triplet等方法存储。</li>
+</ol>
+<p>记忆的检索是自动的。模型会给不同的记忆打分，分数较高的会优先选择。</p>
+<h2 id="Forward-Looking-Active-REtrieval-augmented-generation-FLARE"><a href="#Forward-Looking-Active-REtrieval-augmented-generation-FLARE" class="headerlink" title="Forward-Looking Active REtrieval augmented generation(FLARE)"></a>Forward-Looking Active REtrieval augmented generation(FLARE)</h2><p>文章名：<strong>Active Retrieval Augmented Generation</strong>，LTI@CMU组实现</p>
+<p>前瞻性主动检索增强生成</p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>原有的LLM+retrieval主要使用的是一次查询+生成，即：</p>
+<script type="math/tex; mode=display">
+生成结果y=LM([查询结果\mathcal D_x, \text{query}\ x])</script><p>在Active Retrieval Augmented Generation中需要进行多次查询+生成：</p>
+<script type="math/tex; mode=display">
+查询使用的\text{query}\ q_t=\text{qry}(x,[y_0,\dots,y_{t-1}])\\
+生成结果y_t=LM([\mathcal D_{q_t},x,[y_0,\dots,y_{t_1}]])</script><p>FLARE的intuition：</p>
+<ol>
+<li>LLM应该只在知识不足的时候进行查询，而非所有时候都进行不必要的查询；</li>
+<li>查询的query应该包含未来生成目标的意图。</li>
+</ol>
+<h4 id="FLARE-instruct"><a href="#FLARE-instruct" class="headerlink" title="FLARE instruct"></a>FLARE instruct</h4><p>eg：<img src="/LLM-application/LLM-memory-survey/image-20240218171820374.png" alt="image-20240218171820374" style="zoom:50%;"></p>
+<p>对一些不确定的信息进行查询，并插入到生成的回答中。</p>
+<h4 id="FLARE-direct"><a href="#FLARE-direct" class="headerlink" title="FLARE direct"></a>FLARE direct</h4><p>在上述的多次查询+生成中进行修改：</p>
+<p>在每一次迭代中：</p>
 <ul>
-<li><p>用户数据收集<em>User data collection</em></p>
+<li><p>先根据query和已经生成的语句生成下一句$\hat{s}_t$，作为备选项；</p>
 </li>
-<li><p>特征处理<em>Feature engineering</em></p>
-<p>将原数据进行处理（如独热码）</p>
+<li><p>当LM对$\hat{s}_t$有信心（所有token概率大于一个阈值）时，就直接使用该语句；</p>
 </li>
-<li><p>特征编码<em>Feature encoder</em></p>
-<p>生成神经网络的嵌入向量</p>
-</li>
-<li><p>评分/排序函数<em>Scoring Ranking function</em></p>
-</li>
-<li><p>控制器<em>Pipeline controller</em></p>
-</li>
+<li>否则，仍然类似Active Retrieval Augmented Generation中生成对应结果$y_t=LM([\mathcal D_{q_t},x,[y_0,\dots,y_{t_1}]])$</li>
 </ul>
-</blockquote>
-<p>LLM可用于上述过程中除了用户数据收集的部分。</p>
-<p>对于特征编码部分，使用LLM可以丰富语义信息，还可实现跨领域推荐。</p>
-<p>对于评分/排序函数，LLM可用于解决（1）项目评分任务，（2）项目生成任务，（3）混合任务。项目评分任务主要用于针对目标用户，对每个候选项目进行评分，从而获得一个排名列表；项目生成任务直接生成项目的最终排序列表；混合任务上述二者都支持。</p>
-<p>早期的语言模型参数比较小，被用作简单的文本特征编码器等；但随着模型和参数量的增多，LLM出现了指令跟随、推理等能力，因此可被扩展用于推荐系统的其他方面。</p>
-<p>LLM应用于RS中呈现如下趋势：</p>
-<p><img src="/Essay-analysis/RS-LLM-benefit/image-20230728000320090.png" alt="image-20230728000320090"></p>
-<p>从微调+与CRM（传统推荐模型）结合（如BERT+推荐模型）到不微调+不与CRM结合（如ChatGPT），再到微调+不与CRM结合/不微调+与CRM结合。整体趋势如上图中的箭头所示。</p>
-<p>在上述发展过程中，不微调+不与CRM结合的模型效果较差（绿色），但通过增加领域内的协同知识可以提高模型的性能。</p>
+<p>query $q_t$的选择：可以直接使用上一次生成的$\hat s_t$作为$q_t$，效果也很好。但是可能会出现生成的语句出错，导致查询也出错的情况。可以用以下方法解决：</p>
+<ul>
+<li>将不准确的信息mask掉。</li>
+<li>对于不准确的信息，使用LM生成一系列问题，使得答案应为这些不准确的信息。</li>
+</ul>
+<h2 id="In-Context-Retrieval-Augmented-Language-Models-In-Context-RALM"><a href="#In-Context-Retrieval-Augmented-Language-Models-In-Context-RALM" class="headerlink" title="In-Context Retrieval-Augmented Language Models(In-Context RALM)"></a>In-Context Retrieval-Augmented Language Models(In-Context RALM)</h2><p>文章名：In-Context Retrieval-Augmented Language Models，AI21 Labs实现</p>
+<p>就是FLARE中提到的在query前增加retrieval得到的信息。FLARE中说明：该方法可能会导致模型不清楚接下来生成的内容应该与什么方向有关。</p>
+<h2 id="Survey-Retrieval-Augmented-Generation-for-LLM"><a href="#Survey-Retrieval-Augmented-Generation-for-LLM" class="headerlink" title="Survey: Retrieval-Augmented Generation for LLM"></a>Survey: Retrieval-Augmented Generation for LLM</h2><p>RAG可分为三类：</p>
+<ol>
+<li>Naive RAG</li>
+<li>Advanced RAG</li>
+<li>Modular RAG</li>
+</ol>
+<h3 id="架构变化"><a href="#架构变化" class="headerlink" title="架构变化"></a>架构变化</h3><h4 id="Naive-RAG"><a href="#Naive-RAG" class="headerlink" title="Naive RAG"></a>Naive RAG</h4><p>遵循检索-读取框架：</p>
+<ul>
+<li>首先离线搜索相关资料，将pdf等文件转换为纯文本格式；</li>
+<li>依照传统的搜索方法（余弦相似度等）找到最相关的K个文档，作为上下文生成的基础；</li>
+<li>将上下文合并，作为prompt</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li>检索可能出现的问题：精度低、召回率低、信息过时等。</li>
+<li>生成可能出现的问题：幻觉（hallucination）等。</li>
+<li>增强可能出现的问题：由于搜索结果重复导致的响应重复、输出脱节/不连贯等。</li>
+<li>需要平衡不同段落的价值；</li>
+<li>协调写作风格和预期的差异，以保证输出的一致性；</li>
+<li>模型可能过度依赖检索到的内容，而不提供新的信息。</li>
+</ul>
+<h4 id="Advanced-RAG"><a href="#Advanced-RAG" class="headerlink" title="Advanced RAG"></a>Advanced RAG</h4><p>针对性增强Naive RAG的功能。</p>
+<p>预检索过程的优化：优化数据索引，提高索引内容的质量。可通过增强数据粒度、优化索引结构、添加源数据、对齐优化和混合检索实现。</p>
+<p>检索过程的优化：对嵌入模型（embedding model）进行优化。例：BGE，最新的BGE-M3</p>
+<p>检索后过程的优化：对检索到的内容进行额外处理。可以进行重排序、prompt压缩等处理。</p>
+<h4 id="Modular-RAG"><a href="#Modular-RAG" class="headerlink" title="Modular RAG"></a>Modular RAG</h4><p>将不同模块合并，形成序列化pipe解决特定问题。</p>
+<p>常见模块：搜索模块、记忆模块、路由模块（用于将不同来源的检索结果进行替换、合并）、预测模块（使用LLM直接生成上下文信息，解决噪音问题）、任务适配器（用于使RAG适配下游任务）。</p>
+<p>不同模块之间可以进行排列组合以提高灵活性。</p>
+<p>例：RRR模型引入了Rewrite-RetrieveRead过程，提高重写部分的性能等。</p>
+<p>检索过程优化：可使用混合搜索、递归检索（见Active Retrieval Augmented Generation中的多次检索+查询）、StepBack-prompt（reasoning的方法）、子查询等。</p>
+<p><img src="/LLM-application/LLM-memory-survey/image-20240225212201004.png" alt="image-20240225212201004"></p>
+<h3 id="检索优化"><a href="#检索优化" class="headerlink" title="检索优化"></a>检索优化</h3><p>解决三个问题：如何实现准确的语义表示？如何将查询和文档的语义空间对齐？如何将输出与LLM的偏好对齐？</p>
+<h4 id="语义表示优化"><a href="#语义表示优化" class="headerlink" title="语义表示优化"></a>语义表示优化</h4><ol>
+<li>块优化：文档需要分块才能提取细粒度的特征，但块的大小会影响结果。用户查询的query长度和不同的嵌入模型对不同的块大小性能也不同。-&gt; 不存在最佳策略，应该灵活应用。可以使用滑动窗口技术，也可以使用先小后大的方式进行处理。</li>
+<li>对嵌入模型做微调：嵌入模型对专业领域能力有限，针对不同的下游任务有问题。针对这两个方面作微调可以有效提升性能。</li>
+</ol>
+<h4 id="查询与文档对齐"><a href="#查询与文档对齐" class="headerlink" title="查询与文档对齐"></a>查询与文档对齐</h4><p>查询重写，嵌入转换</p>
+<h4 id="检索器与LLM对齐"><a href="#检索器与LLM对齐" class="headerlink" title="检索器与LLM对齐"></a>检索器与LLM对齐</h4><p>使用LLM的反馈信号完善检索模型；</p>
+<h3 id="生成优化"><a href="#生成优化" class="headerlink" title="生成优化"></a>生成优化</h3><p>对检索出来的文档需要再次进行处理，包括信息压缩、结果重排序。</p>
 
     </div>
 
@@ -296,12 +358,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Windows/windows-conda-pytorch-installation/" rel="prev" title="Windows安装miniconda和pytorch环境">
-      <i class="fa fa-chevron-left"></i> Windows安装miniconda和pytorch环境
+    <a href="/Essay-analysis/RS-LLM-benefit/" rel="prev" title="LLM对推荐系统的影响调研笔记">
+      <i class="fa fa-chevron-left"></i> LLM对推荐系统的影响调研笔记
     </a></div>
       <div class="post-nav-item">
-    <a href="/LLM-application/LLM-memory-survey/" rel="next" title="LLM与检索、记忆相关文章分析">
-      LLM与检索、记忆相关文章分析 <i class="fa fa-chevron-right"></i>
+    <a href="/LLM-application/LLM-personalization-survey/" rel="next" title="LLM与个性化技术相关调研">
+      LLM与个性化技术相关调研 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -361,6 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Forward-Looking-Active-REtrieval-augmented-generation-FLARE"><span class="nav-text">Forward-Looking Active REtrieval augmented generation(FLARE)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-text">基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FLARE-instruct"><span class="nav-text">FLARE instruct</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FLARE-direct"><span class="nav-text">FLARE direct</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#In-Context-Retrieval-Augmented-Language-Models-In-Context-RALM"><span class="nav-text">In-Context Retrieval-Augmented Language Models(In-Context RALM)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Survey-Retrieval-Augmented-Generation-for-LLM"><span class="nav-text">Survey: Retrieval-Augmented Generation for LLM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E5%8F%98%E5%8C%96"><span class="nav-text">架构变化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Naive-RAG"><span class="nav-text">Naive RAG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Advanced-RAG"><span class="nav-text">Advanced RAG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modular-RAG"><span class="nav-text">Modular RAG</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E7%B4%A2%E4%BC%98%E5%8C%96"><span class="nav-text">检索优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%AD%E4%B9%89%E8%A1%A8%E7%A4%BA%E4%BC%98%E5%8C%96"><span class="nav-text">语义表示优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%B8%8E%E6%96%87%E6%A1%A3%E5%AF%B9%E9%BD%90"><span class="nav-text">查询与文档对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E7%B4%A2%E5%99%A8%E4%B8%8ELLM%E5%AF%B9%E9%BD%90"><span class="nav-text">检索器与LLM对齐</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E4%BC%98%E5%8C%96"><span class="nav-text">生成优化</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

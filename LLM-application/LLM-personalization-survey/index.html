@@ -22,21 +22,21 @@
     var CONFIG = {"hostname":"rj-gu.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="文章地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2306.05817.pdf 文章名：How Can Recommender Systems Benefit from Large Language Models: A Survey">
+  <meta name="description" content="相较于传统的搜索引擎和推荐系统是在被动的筛选信息，LLM能够积极主动的探索用户意图，通过多轮交互来确定用户的喜好和兴趣。 eg. 推荐系统中：基于内容的推荐是无法捕获用户偏好的，可以考虑LLM改进。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LLM对推荐系统的影响调研笔记">
-<meta property="og:url" content="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/index.html">
+<meta property="og:title" content="LLM与个性化技术相关调研">
+<meta property="og:url" content="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/index.html">
 <meta property="og:site_name" content="Rongjian Gu&#39;s Homepage">
-<meta property="og:description" content="文章地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2306.05817.pdf 文章名：How Can Recommender Systems Benefit from Large Language Models: A Survey">
+<meta property="og:description" content="相较于传统的搜索引擎和推荐系统是在被动的筛选信息，LLM能够积极主动的探索用户意图，通过多轮交互来确定用户的喜好和兴趣。 eg. 推荐系统中：基于内容的推荐是无法捕获用户偏好的，可以考虑LLM改进。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/image-20230728000320090.png">
-<meta property="article:published_time" content="2023-07-27T16:15:18.000Z">
-<meta property="article:modified_time" content="2023-07-27T16:16:46.168Z">
+<meta property="og:image" content="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/image-20240226185625655.png">
+<meta property="article:published_time" content="2024-02-26T10:23:34.000Z">
+<meta property="article:modified_time" content="2024-03-03T10:12:36.011Z">
 <meta property="article:author" content="RJ-Gu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/image-20230728000320090.png">
+<meta name="twitter:image" content="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/image-20240226185625655.png">
 
-<link rel="canonical" href="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/">
+<link rel="canonical" href="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/">
 
 
 <script id="page-configurations">
@@ -55,7 +55,7 @@
   
 
 
-  <title>LLM对推荐系统的影响调研笔记 | Rongjian Gu's Homepage</title>
+  <title>LLM与个性化技术相关调研 | Rongjian Gu's Homepage</title>
   
 
 
@@ -201,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://rj-gu.github.io/Essay-analysis/RS-LLM-benefit/">
+    <link itemprop="mainEntityOfPage" href="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/">
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="RJ-Gu">
@@ -213,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LLM对推荐系统的影响调研笔记
+          LLM与个性化技术相关调研
         </h1>
 
         <div class="post-meta">
@@ -223,17 +223,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-07-28 00:15:18 / Modified: 00:16:46" itemprop="dateCreated datePublished" datetime="2023-07-28T00:15:18+08:00">2023-07-28</time>
+              <time title="Created: 2024-02-26 18:23:34" itemprop="dateCreated datePublished" datetime="2024-02-26T18:23:34+08:00">2024-02-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-03 18:12:36" itemprop="dateModified" datetime="2024-03-03T18:12:36+08:00">2024-03-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Essay-analysis/" itemprop="url" rel="index"><span itemprop="name">Essay analysis</span></a>
+                  <a href="/categories/LLM-application/" itemprop="url" rel="index"><span itemprop="name">LLM-application</span></a>
                 </span>
             </span>
 
@@ -248,34 +254,43 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2306.05817.pdf">https://arxiv.org/pdf/2306.05817.pdf</a></p>
-<p>文章名：How Can Recommender Systems Benefit from Large Language Models: A Survey</p>
+        <p>相较于传统的搜索引擎和推荐系统是在被动的筛选信息，LLM能够积极主动的探索用户意图，通过多轮交互来确定用户的喜好和兴趣。</p>
+<p>eg. 推荐系统中：基于内容的推荐是无法捕获用户偏好的，可以考虑LLM改进。</p>
+<p><img src="/LLM-application/LLM-personalization-survey/image-20240226185625655.png" alt="image-20240226185625655"></p>
 <span id="more"></span>
-<blockquote>
-<p>推荐系统的流水过程：</p>
+<h3 id="LLM作为知识库"><a href="#LLM作为知识库" class="headerlink" title="LLM作为知识库"></a>LLM作为知识库</h3><p>首先，可以直接通过三元组的头部实体和关系来预测尾部实体。因为LLM中存有大量常识知识，也可以通过LLM构建知识图谱。LLM还可以补全知识图谱，提升原有的知识图谱的质量。</p>
+<p>应当注意LLM此时的幻觉问题。</p>
+<h3 id="LLM作为内容翻译器-content-interpreter"><a href="#LLM作为内容翻译器-content-interpreter" class="headerlink" title="LLM作为内容翻译器(content interpreter)"></a>LLM作为内容翻译器(content interpreter)</h3><p>LLM可以将输入信息理解后分析出一些内部信息，用于推荐。</p>
+<h3 id="LLM作为解释器（explainer）"><a href="#LLM作为解释器（explainer）" class="headerlink" title="LLM作为解释器（explainer）"></a>LLM作为解释器（explainer）</h3><p>LLM可以给出推荐某个物品的理由。通过这种方式可以提高模型的说服力和可靠性，也利于识别纠正错误。</p>
+<p>相比于传统方法，LLM实现的可解释推荐能够不受模板约束，更加适合用户偏好的定制解释，减少局限性。此外，它也能获得用户即时反馈，促进双向对齐。</p>
+<p>问题：无法找到给出解释的依据；给出的解释可能与推荐的行为不一致；同样的线索可能给出不同的解释。</p>
+<h3 id="LLM做推理"><a href="#LLM做推理" class="headerlink" title="LLM做推理"></a>LLM做推理</h3><p>LLM拥有一定的推理能力，能够帮助挖掘用户兴趣。</p>
+<p>LLM可以不做调整，直接进行推理推荐。但是存在问题：</p>
+<ol>
+<li>在公开数据集上表现好，但私有数据集上表现差(zero shot)；</li>
+<li>LLM与传统推荐模型的推荐性能拉不开差距。</li>
+</ol>
+<p>此外，LLM还可以与其他算法结合（如遗传算法，LLM生成解空间中的可选解），从而获得比直接推理更好的性能，还能维持一定的可解释性。</p>
+<p>存在的问题：复杂度比较高 等问题。</p>
+<h3 id="LLM作为对话代理"><a href="#LLM作为对话代理" class="headerlink" title="LLM作为对话代理"></a>LLM作为对话代理</h3><p>会话式推荐系统可以实时理解用户意图，根据反馈调整推荐。</p>
+<p>LLM可以通过一系列QA获取用户偏好来进行推荐。同样的，存在一系列问题：针对私有数据的效果差，可通过微调解决；prompt仍然需要引导才能成功推理；长时间的记忆存在问题（retrieval）。</p>
+<h3 id="LLM用于工具学习-tool-learning"><a href="#LLM用于工具学习-tool-learning" class="headerlink" title="LLM用于工具学习(tool learning)"></a>LLM用于工具学习(tool learning)</h3><p>工具学习将专门工具与基础模型相结合，从而解决复杂问题。</p>
+<p>LLM与外部工具（如数据库、搜索引擎等）相结合中，LLM常用作控制器，选择管理现有的模型解决问题。</p>
+<p>LLM作为推荐代理时，也可以使用外部工具改善其缺少私有数据，或过时信息造成的问题。可用的工具有：搜索引擎，数据库，recommendation engine等。</p>
+<h3 id="LLM作为个性化内容创建者"><a href="#LLM作为个性化内容创建者" class="headerlink" title="LLM作为个性化内容创建者"></a>LLM作为个性化内容创建者</h3><p>使用LLM针对不同个体生成个性化内容，如视频，广告等。存在的问题：真实性，数据隐私。</p>
+<h3 id="仍然存在的问题"><a href="#仍然存在的问题" class="headerlink" title="仍然存在的问题"></a>仍然存在的问题</h3><p>计算能力不足，响应时间长；</p>
+<p>个性化任务需要特定的数据集，需要针对数据集做调整；</p>
+<p>长文本的窗口限制；</p>
+<p>解释性问题，不够透明，可能涉及公平与道德问题</p>
+<p>个性化系统的评价指标问题：针对大模型可能需要新增评价指标，如用户偏好，满意度等；</p>
+<p>个性化系统需要在性能、准确度之间做权衡。</p>
+<h2 id="LLM的一种个性化方法"><a href="#LLM的一种个性化方法" class="headerlink" title="LLM的一种个性化方法"></a>LLM的一种个性化方法</h2><p>文章名：Teach LLMs to Personalize – An Approach inspired by Writing Education</p>
+<p>google实现</p>
+<p>实现了一种个性化的文本生成的通用方法。</p>
+<p>具体而言：多阶段多任务框架生成；检索-排序-总结-综合-生成。多任务：LLM应更好地阅读给定文本并理解其来源，才能生成更个性化的内容。</p>
 <ul>
-<li><p>用户数据收集<em>User data collection</em></p>
-</li>
-<li><p>特征处理<em>Feature engineering</em></p>
-<p>将原数据进行处理（如独热码）</p>
-</li>
-<li><p>特征编码<em>Feature encoder</em></p>
-<p>生成神经网络的嵌入向量</p>
-</li>
-<li><p>评分/排序函数<em>Scoring Ranking function</em></p>
-</li>
-<li><p>控制器<em>Pipeline controller</em></p>
-</li>
+<li>研究发现写作生成任务的效果与阅读理解任务相关。因此，模型还需要判断给定的一堆文档是否由同一个作者撰写。</li>
 </ul>
-</blockquote>
-<p>LLM可用于上述过程中除了用户数据收集的部分。</p>
-<p>对于特征编码部分，使用LLM可以丰富语义信息，还可实现跨领域推荐。</p>
-<p>对于评分/排序函数，LLM可用于解决（1）项目评分任务，（2）项目生成任务，（3）混合任务。项目评分任务主要用于针对目标用户，对每个候选项目进行评分，从而获得一个排名列表；项目生成任务直接生成项目的最终排序列表；混合任务上述二者都支持。</p>
-<p>早期的语言模型参数比较小，被用作简单的文本特征编码器等；但随着模型和参数量的增多，LLM出现了指令跟随、推理等能力，因此可被扩展用于推荐系统的其他方面。</p>
-<p>LLM应用于RS中呈现如下趋势：</p>
-<p><img src="/Essay-analysis/RS-LLM-benefit/image-20230728000320090.png" alt="image-20230728000320090"></p>
-<p>从微调+与CRM（传统推荐模型）结合（如BERT+推荐模型）到不微调+不与CRM结合（如ChatGPT），再到微调+不与CRM结合/不微调+与CRM结合。整体趋势如上图中的箭头所示。</p>
-<p>在上述发展过程中，不微调+不与CRM结合的模型效果较差（绿色），但通过增加领域内的协同知识可以提高模型的性能。</p>
 
     </div>
 
@@ -296,13 +311,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Windows/windows-conda-pytorch-installation/" rel="prev" title="Windows安装miniconda和pytorch环境">
-      <i class="fa fa-chevron-left"></i> Windows安装miniconda和pytorch环境
+    <a href="/LLM-application/LLM-memory-survey/" rel="prev" title="LLM与检索、记忆相关文章分析">
+      <i class="fa fa-chevron-left"></i> LLM与检索、记忆相关文章分析
     </a></div>
-      <div class="post-nav-item">
-    <a href="/LLM-application/LLM-memory-survey/" rel="next" title="LLM与检索、记忆相关文章分析">
-      LLM与检索、记忆相关文章分析 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -361,6 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E7%9F%A5%E8%AF%86%E5%BA%93"><span class="nav-text">LLM作为知识库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E5%86%85%E5%AE%B9%E7%BF%BB%E8%AF%91%E5%99%A8-content-interpreter"><span class="nav-text">LLM作为内容翻译器(content interpreter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E8%A7%A3%E9%87%8A%E5%99%A8%EF%BC%88explainer%EF%BC%89"><span class="nav-text">LLM作为解释器（explainer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E5%81%9A%E6%8E%A8%E7%90%86"><span class="nav-text">LLM做推理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E5%AF%B9%E8%AF%9D%E4%BB%A3%E7%90%86"><span class="nav-text">LLM作为对话代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E7%94%A8%E4%BA%8E%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0-tool-learning"><span class="nav-text">LLM用于工具学习(tool learning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E4%B8%AA%E6%80%A7%E5%8C%96%E5%86%85%E5%AE%B9%E5%88%9B%E5%BB%BA%E8%80%85"><span class="nav-text">LLM作为个性化内容创建者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8D%E7%84%B6%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">仍然存在的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLM%E7%9A%84%E4%B8%80%E7%A7%8D%E4%B8%AA%E6%80%A7%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-text">LLM的一种个性化方法</span></a></div>
       </div>
       <!--/noindex-->
 

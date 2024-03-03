@@ -14,6 +14,142 @@
 ]]></content>
   </entry>
   <entry>
+    <title>LLM与个性化技术相关调研</title>
+    <url>/LLM-application/LLM-personalization-survey/</url>
+    <content><![CDATA[<p>相较于传统的搜索引擎和推荐系统是在被动的筛选信息，LLM能够积极主动的探索用户意图，通过多轮交互来确定用户的喜好和兴趣。</p>
+<p>eg. 推荐系统中：基于内容的推荐是无法捕获用户偏好的，可以考虑LLM改进。</p>
+<p><img src="/LLM-application/LLM-personalization-survey/image-20240226185625655.png" alt="image-20240226185625655"></p>
+<span id="more"></span>
+<h3 id="LLM作为知识库"><a href="#LLM作为知识库" class="headerlink" title="LLM作为知识库"></a>LLM作为知识库</h3><p>首先，可以直接通过三元组的头部实体和关系来预测尾部实体。因为LLM中存有大量常识知识，也可以通过LLM构建知识图谱。LLM还可以补全知识图谱，提升原有的知识图谱的质量。</p>
+<p>应当注意LLM此时的幻觉问题。</p>
+<h3 id="LLM作为内容翻译器-content-interpreter"><a href="#LLM作为内容翻译器-content-interpreter" class="headerlink" title="LLM作为内容翻译器(content interpreter)"></a>LLM作为内容翻译器(content interpreter)</h3><p>LLM可以将输入信息理解后分析出一些内部信息，用于推荐。</p>
+<h3 id="LLM作为解释器（explainer）"><a href="#LLM作为解释器（explainer）" class="headerlink" title="LLM作为解释器（explainer）"></a>LLM作为解释器（explainer）</h3><p>LLM可以给出推荐某个物品的理由。通过这种方式可以提高模型的说服力和可靠性，也利于识别纠正错误。</p>
+<p>相比于传统方法，LLM实现的可解释推荐能够不受模板约束，更加适合用户偏好的定制解释，减少局限性。此外，它也能获得用户即时反馈，促进双向对齐。</p>
+<p>问题：无法找到给出解释的依据；给出的解释可能与推荐的行为不一致；同样的线索可能给出不同的解释。</p>
+<h3 id="LLM做推理"><a href="#LLM做推理" class="headerlink" title="LLM做推理"></a>LLM做推理</h3><p>LLM拥有一定的推理能力，能够帮助挖掘用户兴趣。</p>
+<p>LLM可以不做调整，直接进行推理推荐。但是存在问题：</p>
+<ol>
+<li>在公开数据集上表现好，但私有数据集上表现差(zero shot)；</li>
+<li>LLM与传统推荐模型的推荐性能拉不开差距。</li>
+</ol>
+<p>此外，LLM还可以与其他算法结合（如遗传算法，LLM生成解空间中的可选解），从而获得比直接推理更好的性能，还能维持一定的可解释性。</p>
+<p>存在的问题：复杂度比较高 等问题。</p>
+<h3 id="LLM作为对话代理"><a href="#LLM作为对话代理" class="headerlink" title="LLM作为对话代理"></a>LLM作为对话代理</h3><p>会话式推荐系统可以实时理解用户意图，根据反馈调整推荐。</p>
+<p>LLM可以通过一系列QA获取用户偏好来进行推荐。同样的，存在一系列问题：针对私有数据的效果差，可通过微调解决；prompt仍然需要引导才能成功推理；长时间的记忆存在问题（retrieval）。</p>
+<h3 id="LLM用于工具学习-tool-learning"><a href="#LLM用于工具学习-tool-learning" class="headerlink" title="LLM用于工具学习(tool learning)"></a>LLM用于工具学习(tool learning)</h3><p>工具学习将专门工具与基础模型相结合，从而解决复杂问题。</p>
+<p>LLM与外部工具（如数据库、搜索引擎等）相结合中，LLM常用作控制器，选择管理现有的模型解决问题。</p>
+<p>LLM作为推荐代理时，也可以使用外部工具改善其缺少私有数据，或过时信息造成的问题。可用的工具有：搜索引擎，数据库，recommendation engine等。</p>
+<h3 id="LLM作为个性化内容创建者"><a href="#LLM作为个性化内容创建者" class="headerlink" title="LLM作为个性化内容创建者"></a>LLM作为个性化内容创建者</h3><p>使用LLM针对不同个体生成个性化内容，如视频，广告等。存在的问题：真实性，数据隐私。</p>
+<h3 id="仍然存在的问题"><a href="#仍然存在的问题" class="headerlink" title="仍然存在的问题"></a>仍然存在的问题</h3><p>计算能力不足，响应时间长；</p>
+<p>个性化任务需要特定的数据集，需要针对数据集做调整；</p>
+<p>长文本的窗口限制；</p>
+<p>解释性问题，不够透明，可能涉及公平与道德问题</p>
+<p>个性化系统的评价指标问题：针对大模型可能需要新增评价指标，如用户偏好，满意度等；</p>
+<p>个性化系统需要在性能、准确度之间做权衡。</p>
+<h2 id="LLM的一种个性化方法"><a href="#LLM的一种个性化方法" class="headerlink" title="LLM的一种个性化方法"></a>LLM的一种个性化方法</h2><p>文章名：Teach LLMs to Personalize – An Approach inspired by Writing Education</p>
+<p>google实现</p>
+<p>实现了一种个性化的文本生成的通用方法。</p>
+<p>具体而言：多阶段多任务框架生成；检索-排序-总结-综合-生成。多任务：LLM应更好地阅读给定文本并理解其来源，才能生成更个性化的内容。</p>
+<ul>
+<li>研究发现写作生成任务的效果与阅读理解任务相关。因此，模型还需要判断给定的一堆文档是否由同一个作者撰写。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>LLM-application</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>LLM与检索、记忆相关文章分析</title>
+    <url>/LLM-application/LLM-memory-survey/</url>
+    <content><![CDATA[<p>因为AI Agents需要处理各种各样的情况，LLM就会作为Agents的一种重要的底层模型。在这个框架下，LLM需要得到多方面的提升才能在Agents中发挥作用。记忆就是其中重要的一部分，Agents需要特定的记忆机制来确保其能够正确的处理复杂的任务，应用之前的策略。此外，这样也能帮助Agents适应陌生的环境。</p>
+<span id="more"></span>
+<p>LLM中实现记忆存在难点：</p>
+<ol>
+<li>LLM是以自然语言格式处理交互的；随着总记录的变多，输入数据可能会超过Transformer体系结构的限制，导致之前的数据出现丢失的情况。</li>
+<li>LLM很难提取之前获得的记忆。历史记录变多后，Agents的记忆压力增加，在相关的topic之间建立连接的难度变大。</li>
+</ol>
+<p>有如下帮助Agents增强记忆的方式：</p>
+<ol>
+<li>提升Transformer模型的长度限制：可以使用文本截断、分割输入、强调关键部分等方法；还可以修改注意力机制从而适应更长的序列。</li>
+<li>记忆总结：将记忆浓缩总结。</li>
+<li>使用向量或数据结构压缩记忆：可以使用embedding vector/triplet等方法存储。</li>
+</ol>
+<p>记忆的检索是自动的。模型会给不同的记忆打分，分数较高的会优先选择。</p>
+<h2 id="Forward-Looking-Active-REtrieval-augmented-generation-FLARE"><a href="#Forward-Looking-Active-REtrieval-augmented-generation-FLARE" class="headerlink" title="Forward-Looking Active REtrieval augmented generation(FLARE)"></a>Forward-Looking Active REtrieval augmented generation(FLARE)</h2><p>文章名：<strong>Active Retrieval Augmented Generation</strong>，LTI@CMU组实现</p>
+<p>前瞻性主动检索增强生成</p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>原有的LLM+retrieval主要使用的是一次查询+生成，即：</p>
+<script type="math/tex; mode=display">
+生成结果y=LM([查询结果\mathcal D_x, \text{query}\ x])</script><p>在Active Retrieval Augmented Generation中需要进行多次查询+生成：</p>
+<script type="math/tex; mode=display">
+查询使用的\text{query}\ q_t=\text{qry}(x,[y_0,\dots,y_{t-1}])\\
+生成结果y_t=LM([\mathcal D_{q_t},x,[y_0,\dots,y_{t_1}]])</script><p>FLARE的intuition：</p>
+<ol>
+<li>LLM应该只在知识不足的时候进行查询，而非所有时候都进行不必要的查询；</li>
+<li>查询的query应该包含未来生成目标的意图。</li>
+</ol>
+<h4 id="FLARE-instruct"><a href="#FLARE-instruct" class="headerlink" title="FLARE instruct"></a>FLARE instruct</h4><p>eg：<img src="/LLM-application/LLM-memory-survey/image-20240218171820374.png" alt="image-20240218171820374" style="zoom:50%;"></p>
+<p>对一些不确定的信息进行查询，并插入到生成的回答中。</p>
+<h4 id="FLARE-direct"><a href="#FLARE-direct" class="headerlink" title="FLARE direct"></a>FLARE direct</h4><p>在上述的多次查询+生成中进行修改：</p>
+<p>在每一次迭代中：</p>
+<ul>
+<li><p>先根据query和已经生成的语句生成下一句$\hat{s}_t$，作为备选项；</p>
+</li>
+<li><p>当LM对$\hat{s}_t$有信心（所有token概率大于一个阈值）时，就直接使用该语句；</p>
+</li>
+<li>否则，仍然类似Active Retrieval Augmented Generation中生成对应结果$y_t=LM([\mathcal D_{q_t},x,[y_0,\dots,y_{t_1}]])$</li>
+</ul>
+<p>query $q_t$的选择：可以直接使用上一次生成的$\hat s_t$作为$q_t$，效果也很好。但是可能会出现生成的语句出错，导致查询也出错的情况。可以用以下方法解决：</p>
+<ul>
+<li>将不准确的信息mask掉。</li>
+<li>对于不准确的信息，使用LM生成一系列问题，使得答案应为这些不准确的信息。</li>
+</ul>
+<h2 id="In-Context-Retrieval-Augmented-Language-Models-In-Context-RALM"><a href="#In-Context-Retrieval-Augmented-Language-Models-In-Context-RALM" class="headerlink" title="In-Context Retrieval-Augmented Language Models(In-Context RALM)"></a>In-Context Retrieval-Augmented Language Models(In-Context RALM)</h2><p>文章名：In-Context Retrieval-Augmented Language Models，AI21 Labs实现</p>
+<p>就是FLARE中提到的在query前增加retrieval得到的信息。FLARE中说明：该方法可能会导致模型不清楚接下来生成的内容应该与什么方向有关。</p>
+<h2 id="Survey-Retrieval-Augmented-Generation-for-LLM"><a href="#Survey-Retrieval-Augmented-Generation-for-LLM" class="headerlink" title="Survey: Retrieval-Augmented Generation for LLM"></a>Survey: Retrieval-Augmented Generation for LLM</h2><p>RAG可分为三类：</p>
+<ol>
+<li>Naive RAG</li>
+<li>Advanced RAG</li>
+<li>Modular RAG</li>
+</ol>
+<h3 id="架构变化"><a href="#架构变化" class="headerlink" title="架构变化"></a>架构变化</h3><h4 id="Naive-RAG"><a href="#Naive-RAG" class="headerlink" title="Naive RAG"></a>Naive RAG</h4><p>遵循检索-读取框架：</p>
+<ul>
+<li>首先离线搜索相关资料，将pdf等文件转换为纯文本格式；</li>
+<li>依照传统的搜索方法（余弦相似度等）找到最相关的K个文档，作为上下文生成的基础；</li>
+<li>将上下文合并，作为prompt</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li>检索可能出现的问题：精度低、召回率低、信息过时等。</li>
+<li>生成可能出现的问题：幻觉（hallucination）等。</li>
+<li>增强可能出现的问题：由于搜索结果重复导致的响应重复、输出脱节/不连贯等。</li>
+<li>需要平衡不同段落的价值；</li>
+<li>协调写作风格和预期的差异，以保证输出的一致性；</li>
+<li>模型可能过度依赖检索到的内容，而不提供新的信息。</li>
+</ul>
+<h4 id="Advanced-RAG"><a href="#Advanced-RAG" class="headerlink" title="Advanced RAG"></a>Advanced RAG</h4><p>针对性增强Naive RAG的功能。</p>
+<p>预检索过程的优化：优化数据索引，提高索引内容的质量。可通过增强数据粒度、优化索引结构、添加源数据、对齐优化和混合检索实现。</p>
+<p>检索过程的优化：对嵌入模型（embedding model）进行优化。例：BGE，最新的BGE-M3</p>
+<p>检索后过程的优化：对检索到的内容进行额外处理。可以进行重排序、prompt压缩等处理。</p>
+<h4 id="Modular-RAG"><a href="#Modular-RAG" class="headerlink" title="Modular RAG"></a>Modular RAG</h4><p>将不同模块合并，形成序列化pipe解决特定问题。</p>
+<p>常见模块：搜索模块、记忆模块、路由模块（用于将不同来源的检索结果进行替换、合并）、预测模块（使用LLM直接生成上下文信息，解决噪音问题）、任务适配器（用于使RAG适配下游任务）。</p>
+<p>不同模块之间可以进行排列组合以提高灵活性。</p>
+<p>例：RRR模型引入了Rewrite-RetrieveRead过程，提高重写部分的性能等。</p>
+<p>检索过程优化：可使用混合搜索、递归检索（见Active Retrieval Augmented Generation中的多次检索+查询）、StepBack-prompt（reasoning的方法）、子查询等。</p>
+<p><img src="/LLM-application/LLM-memory-survey/image-20240225212201004.png" alt="image-20240225212201004"></p>
+<h3 id="检索优化"><a href="#检索优化" class="headerlink" title="检索优化"></a>检索优化</h3><p>解决三个问题：如何实现准确的语义表示？如何将查询和文档的语义空间对齐？如何将输出与LLM的偏好对齐？</p>
+<h4 id="语义表示优化"><a href="#语义表示优化" class="headerlink" title="语义表示优化"></a>语义表示优化</h4><ol>
+<li>块优化：文档需要分块才能提取细粒度的特征，但块的大小会影响结果。用户查询的query长度和不同的嵌入模型对不同的块大小性能也不同。-&gt; 不存在最佳策略，应该灵活应用。可以使用滑动窗口技术，也可以使用先小后大的方式进行处理。</li>
+<li>对嵌入模型做微调：嵌入模型对专业领域能力有限，针对不同的下游任务有问题。针对这两个方面作微调可以有效提升性能。</li>
+</ol>
+<h4 id="查询与文档对齐"><a href="#查询与文档对齐" class="headerlink" title="查询与文档对齐"></a>查询与文档对齐</h4><p>查询重写，嵌入转换</p>
+<h4 id="检索器与LLM对齐"><a href="#检索器与LLM对齐" class="headerlink" title="检索器与LLM对齐"></a>检索器与LLM对齐</h4><p>使用LLM的反馈信号完善检索模型；</p>
+<h3 id="生成优化"><a href="#生成优化" class="headerlink" title="生成优化"></a>生成优化</h3><p>对检索出来的文档需要再次进行处理，包括信息压缩、结果重排序。</p>
+]]></content>
+      <categories>
+        <category>LLM-application</category>
+      </categories>
+  </entry>
+  <entry>
     <title>LLM对推荐系统的影响调研笔记</title>
     <url>/Essay-analysis/RS-LLM-benefit/</url>
     <content><![CDATA[<p>文章地址：<a href="https://arxiv.org/pdf/2306.05817.pdf">https://arxiv.org/pdf/2306.05817.pdf</a></p>
@@ -47,6 +183,62 @@
 ]]></content>
       <categories>
         <category>Essay analysis</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Windows安装miniconda和pytorch环境</title>
+    <url>/Windows/windows-conda-pytorch-installation/</url>
+    <content><![CDATA[<p>此处记录windows环境下miniconda以及pytorch环境的建立过程以及需要注意的事项。</p>
+<span id="more"></span>
+<h2 id="conda环境安装与配置"><a href="#conda环境安装与配置" class="headerlink" title="conda环境安装与配置"></a>conda环境安装与配置</h2><blockquote>
+<p>选择miniconda是因为相较于anaconda，miniconda体积较小，删去了很多用不上的功能。</p>
+</blockquote>
+<p>下载地址：<a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a></p>
+<p>在windows环境下，选择windows平台下的64位安装包，即下图中的第一个选项。</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710193210962.png" alt="image-20230710193210962"></p>
+<blockquote>
+<p>linux环境下则要按照指令集选择对应的版本下载安装包。</p>
+</blockquote>
+<p>按照流程安装即可。</p>
+<blockquote>
+<p>按照默认设置将不会把conda加入环境变量中。如果想要手动加入环境变量，以下为环境变量列表：</p>
+<p>（<code>D:\miniconda3</code>是我的miniconda安装路径，加入环境变量时注意修改为自己的路径）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\miniconda3</span><br><span class="line">D:\miniconda3\Library\mingw-w64\bin</span><br><span class="line">D:\miniconda3\Library\usr\bin</span><br><span class="line">D:\miniconda3\Library\bin</span><br><span class="line">D:\miniconda3\Scripts</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="conda虚拟环境搭建"><a href="#conda虚拟环境搭建" class="headerlink" title="conda虚拟环境搭建"></a>conda虚拟环境搭建</h3><p>类似python的virtualenv，conda可以搭建虚拟环境以实现不同环境的隔离，从而允许不同版本的库在不同程序中正确运行。但conda虚拟环境与virtualenv不同的是，不同的虚拟环境中允许安装不同版本的python，更便于用户使用。</p>
+<p>在不同的环境中，命令行的地址前方会显示当前的虚拟环境名称，如下图所示：</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710194554448.png" alt="image-20230710194554448"></p>
+<p>与虚拟环境相关的常用命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create -n <span class="string">&quot;虚拟环境的名称&quot;</span> python=3.x <span class="comment"># 新建虚拟环境</span></span><br><span class="line">conda <span class="built_in">env</span> list <span class="comment"># 查看虚拟环境列表</span></span><br><span class="line">conda activate <span class="string">&quot;虚拟环境的名称&quot;</span> <span class="comment"># 转到某个虚拟环境</span></span><br><span class="line">conda remove -n <span class="string">&quot;虚拟环境的名称&quot;</span> --all <span class="comment"># 删除某个虚拟环境以及内部的所有包</span></span><br></pre></td></tr></table></figure>
+<h3 id="conda第三方库配置"><a href="#conda第三方库配置" class="headerlink" title="conda第三方库配置"></a>conda第三方库配置</h3><p>在conda虚拟环境内部，安装第三方库除了通过pip安装，还可以通过conda安装。</p>
+<p>conda配置第三方库的命令如下：（注意要转到需要安装库的虚拟环境中）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 安装第三方库</span></span><br><span class="line">conda update --all <span class="comment"># 更新该虚拟环境下的所有第三方库</span></span><br><span class="line">conda update <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 更新某一个库</span></span><br><span class="line">conda uninstall <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 卸载某一个库</span></span><br></pre></td></tr></table></figure>
+<h3 id="conda换源"><a href="#conda换源" class="headerlink" title="conda换源"></a>conda换源</h3><p>此处使用清华源。</p>
+<p>先执行<code>conda config --set show_channel_urls yes</code>命令，在用户目录下生成.condarc文件，再往该文件中写入：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch-lts:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">deepmodeling:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/</span></span><br></pre></td></tr></table></figure>
+<p>即可将源换为清华源。</p>
+<h2 id="pytorch安装与配置"><a href="#pytorch安装与配置" class="headerlink" title="pytorch安装与配置"></a>pytorch安装与配置</h2><p>前往pytorch的官网<a href="https://pytorch.org/">https://pytorch.org/</a>，找到选择安装平台与版本的选项栏，选择对应的版本进行安装。</p>
+<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710205605502.png" alt="image-20230710205605502"></p>
+<p>选择使用conda环境安装，再选择cuda版本，即可得到对应的指令。运行指令即可安装完pytorch。</p>
+<blockquote>
+<p>低版本的pytorch可以在高版本的cuda上运行。但最好选择与cuda版本相适应的pytorch版本进行安装。</p>
+</blockquote>
+<p>安装完后，可以通过如下的指令检查gpu是否可用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.cuda.is_available()</span><br><span class="line"><span class="literal">True</span>	<span class="comment"># True表示cuda可用</span></span><br></pre></td></tr></table></figure>
+<h2 id="jupyter-notebook安装与配置"><a href="#jupyter-notebook安装与配置" class="headerlink" title="jupyter notebook安装与配置"></a>jupyter notebook安装与配置</h2><p>通过以下指令来安装jupyter notebook。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install jupyter</span><br></pre></td></tr></table></figure>
+<p>安装完成后，可通过命令行输入<code>jupyter notebook</code>来启动jupyter notebook。</p>
+<blockquote>
+<p>取消jupyter notebook密码：</p>
+<ol>
+<li>输入<code>jupyter notebook --generate-config</code>，生成一个py文件；</li>
+<li>找到py文件中的<code>\#c.NotebookApp.token = &#39;&lt;generated&gt;&#39;</code>，改为<code>c.NotebookApp.token = &#39;&#39;</code>；</li>
+<li>重启jupyter notebook即可。</li>
+</ol>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Windows</category>
       </categories>
   </entry>
   <entry>
@@ -626,62 +818,6 @@
 ]]></content>
       <categories>
         <category>Hexo</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Windows安装miniconda和pytorch环境</title>
-    <url>/Windows/windows-conda-pytorch-installation/</url>
-    <content><![CDATA[<p>此处记录windows环境下miniconda以及pytorch环境的建立过程以及需要注意的事项。</p>
-<span id="more"></span>
-<h2 id="conda环境安装与配置"><a href="#conda环境安装与配置" class="headerlink" title="conda环境安装与配置"></a>conda环境安装与配置</h2><blockquote>
-<p>选择miniconda是因为相较于anaconda，miniconda体积较小，删去了很多用不上的功能。</p>
-</blockquote>
-<p>下载地址：<a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a></p>
-<p>在windows环境下，选择windows平台下的64位安装包，即下图中的第一个选项。</p>
-<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710193210962.png" alt="image-20230710193210962"></p>
-<blockquote>
-<p>linux环境下则要按照指令集选择对应的版本下载安装包。</p>
-</blockquote>
-<p>按照流程安装即可。</p>
-<blockquote>
-<p>按照默认设置将不会把conda加入环境变量中。如果想要手动加入环境变量，以下为环境变量列表：</p>
-<p>（<code>D:\miniconda3</code>是我的miniconda安装路径，加入环境变量时注意修改为自己的路径）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">D:\miniconda3</span><br><span class="line">D:\miniconda3\Library\mingw-w64\bin</span><br><span class="line">D:\miniconda3\Library\usr\bin</span><br><span class="line">D:\miniconda3\Library\bin</span><br><span class="line">D:\miniconda3\Scripts</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="conda虚拟环境搭建"><a href="#conda虚拟环境搭建" class="headerlink" title="conda虚拟环境搭建"></a>conda虚拟环境搭建</h3><p>类似python的virtualenv，conda可以搭建虚拟环境以实现不同环境的隔离，从而允许不同版本的库在不同程序中正确运行。但conda虚拟环境与virtualenv不同的是，不同的虚拟环境中允许安装不同版本的python，更便于用户使用。</p>
-<p>在不同的环境中，命令行的地址前方会显示当前的虚拟环境名称，如下图所示：</p>
-<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710194554448.png" alt="image-20230710194554448"></p>
-<p>与虚拟环境相关的常用命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create -n <span class="string">&quot;虚拟环境的名称&quot;</span> python=3.x <span class="comment"># 新建虚拟环境</span></span><br><span class="line">conda <span class="built_in">env</span> list <span class="comment"># 查看虚拟环境列表</span></span><br><span class="line">conda activate <span class="string">&quot;虚拟环境的名称&quot;</span> <span class="comment"># 转到某个虚拟环境</span></span><br><span class="line">conda remove -n <span class="string">&quot;虚拟环境的名称&quot;</span> --all <span class="comment"># 删除某个虚拟环境以及内部的所有包</span></span><br></pre></td></tr></table></figure>
-<h3 id="conda第三方库配置"><a href="#conda第三方库配置" class="headerlink" title="conda第三方库配置"></a>conda第三方库配置</h3><p>在conda虚拟环境内部，安装第三方库除了通过pip安装，还可以通过conda安装。</p>
-<p>conda配置第三方库的命令如下：（注意要转到需要安装库的虚拟环境中）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 安装第三方库</span></span><br><span class="line">conda update --all <span class="comment"># 更新该虚拟环境下的所有第三方库</span></span><br><span class="line">conda update <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 更新某一个库</span></span><br><span class="line">conda uninstall <span class="string">&quot;第三方库的名称&quot;</span> <span class="comment"># 卸载某一个库</span></span><br></pre></td></tr></table></figure>
-<h3 id="conda换源"><a href="#conda换源" class="headerlink" title="conda换源"></a>conda换源</h3><p>此处使用清华源。</p>
-<p>先执行<code>conda config --set show_channel_urls yes</code>命令，在用户目录下生成.condarc文件，再往该文件中写入：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch-lts:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">deepmodeling:</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/</span></span><br></pre></td></tr></table></figure>
-<p>即可将源换为清华源。</p>
-<h2 id="pytorch安装与配置"><a href="#pytorch安装与配置" class="headerlink" title="pytorch安装与配置"></a>pytorch安装与配置</h2><p>前往pytorch的官网<a href="https://pytorch.org/">https://pytorch.org/</a>，找到选择安装平台与版本的选项栏，选择对应的版本进行安装。</p>
-<p><img src="/Windows/windows-conda-pytorch-installation/image-20230710205605502.png" alt="image-20230710205605502"></p>
-<p>选择使用conda环境安装，再选择cuda版本，即可得到对应的指令。运行指令即可安装完pytorch。</p>
-<blockquote>
-<p>低版本的pytorch可以在高版本的cuda上运行。但最好选择与cuda版本相适应的pytorch版本进行安装。</p>
-</blockquote>
-<p>安装完后，可以通过如下的指令检查gpu是否可用。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.cuda.is_available()</span><br><span class="line"><span class="literal">True</span>	<span class="comment"># True表示cuda可用</span></span><br></pre></td></tr></table></figure>
-<h2 id="jupyter-notebook安装与配置"><a href="#jupyter-notebook安装与配置" class="headerlink" title="jupyter notebook安装与配置"></a>jupyter notebook安装与配置</h2><p>通过以下指令来安装jupyter notebook。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install jupyter</span><br></pre></td></tr></table></figure>
-<p>安装完成后，可通过命令行输入<code>jupyter notebook</code>来启动jupyter notebook。</p>
-<blockquote>
-<p>取消jupyter notebook密码：</p>
-<ol>
-<li>输入<code>jupyter notebook --generate-config</code>，生成一个py文件；</li>
-<li>找到py文件中的<code>\#c.NotebookApp.token = &#39;&lt;generated&gt;&#39;</code>，改为<code>c.NotebookApp.token = &#39;&#39;</code>；</li>
-<li>重启jupyter notebook即可。</li>
-</ol>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Windows</category>
       </categories>
   </entry>
 </search>
