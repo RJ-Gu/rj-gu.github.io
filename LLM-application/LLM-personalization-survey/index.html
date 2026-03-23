@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rj-gu.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="相较于传统的搜索引擎和推荐系统是在被动的筛选信息，LLM能够积极主动的探索用户意图，通过多轮交互来确定用户的喜好和兴趣。 eg. 推荐系统中：基于内容的推荐是无法捕获用户偏好的，可以考虑LLM改进。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM与个性化技术相关调研">
+<meta property="og:url" content="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/index.html">
+<meta property="og:site_name" content="Rongjian Gu&#39;s Homepage">
+<meta property="og:description" content="相较于传统的搜索引擎和推荐系统是在被动的筛选信息，LLM能够积极主动的探索用户意图，通过多轮交互来确定用户的喜好和兴趣。 eg. 推荐系统中：基于内容的推荐是无法捕获用户偏好的，可以考虑LLM改进。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://rj-gu.github.io/.io//image-20240226185625655.png">
+<meta property="article:published_time" content="2024-02-26T10:23:34.000Z">
+<meta property="article:modified_time" content="2026-03-23T06:18:04.247Z">
+<meta property="article:author" content="RJ-Gu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rj-gu.github.io/.io//image-20240226185625655.png">
+
+<link rel="canonical" href="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  
+  
+    <script src="/js/cursor/love.min.js"></script>
+  
+
+
+  <title>LLM与个性化技术相关调研 | Rongjian Gu's Homepage</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rongjian Gu's Homepage</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Simple thoughts; Simple works.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/RJ-Gu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rj-gu.github.io/LLM-application/LLM-personalization-survey/">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="RJ-Gu">
+      <meta itemprop="description" content="A subtle homepage of an ordinary student in USTC">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rongjian Gu's Homepage">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM与个性化技术相关调研
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-26 18:23:34" itemprop="dateCreated datePublished" datetime="2024-02-26T18:23:34+08:00">2024-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-03-23 14:18:04" itemprop="dateModified" datetime="2026-03-23T14:18:04+08:00">2026-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LLM-application/" itemprop="url" rel="index"><span itemprop="name">LLM application</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>相较于传统的搜索引擎和推荐系统是在被动的筛选信息，LLM能够积极主动的探索用户意图，通过多轮交互来确定用户的喜好和兴趣。</p>
+<p>eg. 推荐系统中：基于内容的推荐是无法捕获用户偏好的，可以考虑LLM改进。</p>
+<p><img src="/.io//image-20240226185625655.png" alt="image-20240226185625655"></p>
+<span id="more"></span>
+<h3 id="LLM作为知识库"><a href="#LLM作为知识库" class="headerlink" title="LLM作为知识库"></a>LLM作为知识库</h3><p>首先，可以直接通过三元组的头部实体和关系来预测尾部实体。因为LLM中存有大量常识知识，也可以通过LLM构建知识图谱。LLM还可以补全知识图谱，提升原有的知识图谱的质量。</p>
+<p>应当注意LLM此时的幻觉问题。</p>
+<h3 id="LLM作为内容翻译器-content-interpreter"><a href="#LLM作为内容翻译器-content-interpreter" class="headerlink" title="LLM作为内容翻译器(content interpreter)"></a>LLM作为内容翻译器(content interpreter)</h3><p>LLM可以将输入信息理解后分析出一些内部信息，用于推荐。</p>
+<h3 id="LLM作为解释器（explainer）"><a href="#LLM作为解释器（explainer）" class="headerlink" title="LLM作为解释器（explainer）"></a>LLM作为解释器（explainer）</h3><p>LLM可以给出推荐某个物品的理由。通过这种方式可以提高模型的说服力和可靠性，也利于识别纠正错误。</p>
+<p>相比于传统方法，LLM实现的可解释推荐能够不受模板约束，更加适合用户偏好的定制解释，减少局限性。此外，它也能获得用户即时反馈，促进双向对齐。</p>
+<p>问题：无法找到给出解释的依据；给出的解释可能与推荐的行为不一致；同样的线索可能给出不同的解释。</p>
+<h3 id="LLM做推理"><a href="#LLM做推理" class="headerlink" title="LLM做推理"></a>LLM做推理</h3><p>LLM拥有一定的推理能力，能够帮助挖掘用户兴趣。</p>
+<p>LLM可以不做调整，直接进行推理推荐。但是存在问题：</p>
+<ol>
+<li>在公开数据集上表现好，但私有数据集上表现差(zero shot)；</li>
+<li>LLM与传统推荐模型的推荐性能拉不开差距。</li>
+</ol>
+<p>此外，LLM还可以与其他算法结合（如遗传算法，LLM生成解空间中的可选解），从而获得比直接推理更好的性能，还能维持一定的可解释性。</p>
+<p>存在的问题：复杂度比较高 等问题。</p>
+<h3 id="LLM作为对话代理"><a href="#LLM作为对话代理" class="headerlink" title="LLM作为对话代理"></a>LLM作为对话代理</h3><p>会话式推荐系统可以实时理解用户意图，根据反馈调整推荐。</p>
+<p>LLM可以通过一系列QA获取用户偏好来进行推荐。同样的，存在一系列问题：针对私有数据的效果差，可通过微调解决；prompt仍然需要引导才能成功推理；长时间的记忆存在问题（retrieval）。</p>
+<h3 id="LLM用于工具学习-tool-learning"><a href="#LLM用于工具学习-tool-learning" class="headerlink" title="LLM用于工具学习(tool learning)"></a>LLM用于工具学习(tool learning)</h3><p>工具学习将专门工具与基础模型相结合，从而解决复杂问题。</p>
+<p>LLM与外部工具（如数据库、搜索引擎等）相结合中，LLM常用作控制器，选择管理现有的模型解决问题。</p>
+<p>LLM作为推荐代理时，也可以使用外部工具改善其缺少私有数据，或过时信息造成的问题。可用的工具有：搜索引擎，数据库，recommendation engine等。</p>
+<h3 id="LLM作为个性化内容创建者"><a href="#LLM作为个性化内容创建者" class="headerlink" title="LLM作为个性化内容创建者"></a>LLM作为个性化内容创建者</h3><p>使用LLM针对不同个体生成个性化内容，如视频，广告等。存在的问题：真实性，数据隐私。</p>
+<h3 id="仍然存在的问题"><a href="#仍然存在的问题" class="headerlink" title="仍然存在的问题"></a>仍然存在的问题</h3><p>计算能力不足，响应时间长；</p>
+<p>个性化任务需要特定的数据集，需要针对数据集做调整；</p>
+<p>长文本的窗口限制；</p>
+<p>解释性问题，不够透明，可能涉及公平与道德问题</p>
+<p>个性化系统的评价指标问题：针对大模型可能需要新增评价指标，如用户偏好，满意度等；</p>
+<p>个性化系统需要在性能、准确度之间做权衡。</p>
+<h2 id="LLM的一种个性化方法"><a href="#LLM的一种个性化方法" class="headerlink" title="LLM的一种个性化方法"></a>LLM的一种个性化方法</h2><p>文章名：Teach LLMs to Personalize – An Approach inspired by Writing Education</p>
+<p>google实现</p>
+<p>实现了一种个性化的文本生成的通用方法。</p>
+<p>具体而言：多阶段多任务框架生成；检索-排序-总结-综合-生成。多任务：LLM应更好地阅读给定文本并理解其来源，才能生成更个性化的内容。</p>
+<ul>
+<li>研究发现写作生成任务的效果与阅读理解任务相关。因此，模型还需要判断给定的一堆文档是否由同一个作者撰写。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div style="text-align:center;color: #ccc;font-size:14px;">------------- Thanks for watching <i class="fa fa-heart"></i> -------------</div>
+
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/LLM-application/LLM-memory-survey/" rel="prev" title="LLM与检索、记忆相关文章分析">
+      <i class="fa fa-chevron-left"></i> LLM与检索、记忆相关文章分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Essay-analysis/multimodality-survey/" rel="next" title="多模态有关论文模型介绍分析">
+      多模态有关论文模型介绍分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E7%9F%A5%E8%AF%86%E5%BA%93"><span class="nav-text">LLM作为知识库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E5%86%85%E5%AE%B9%E7%BF%BB%E8%AF%91%E5%99%A8-content-interpreter"><span class="nav-text">LLM作为内容翻译器(content interpreter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E8%A7%A3%E9%87%8A%E5%99%A8%EF%BC%88explainer%EF%BC%89"><span class="nav-text">LLM作为解释器（explainer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E5%81%9A%E6%8E%A8%E7%90%86"><span class="nav-text">LLM做推理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E5%AF%B9%E8%AF%9D%E4%BB%A3%E7%90%86"><span class="nav-text">LLM作为对话代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E7%94%A8%E4%BA%8E%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0-tool-learning"><span class="nav-text">LLM用于工具学习(tool learning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E4%BD%9C%E4%B8%BA%E4%B8%AA%E6%80%A7%E5%8C%96%E5%86%85%E5%AE%B9%E5%88%9B%E5%BB%BA%E8%80%85"><span class="nav-text">LLM作为个性化内容创建者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8D%E7%84%B6%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">仍然存在的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLM%E7%9A%84%E4%B8%80%E7%A7%8D%E4%B8%AA%E6%80%A7%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-text">LLM的一种个性化方法</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="RJ-Gu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">RJ-Gu</p>
+  <div class="site-description" itemprop="description">A subtle homepage of an ordinary student in USTC</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RJ-Gu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RJ-Gu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gurongjian@mail.ustc.edu.cn" title="E-Mail → mailto:gurongjian@mail.ustc.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">RJ-Gu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
